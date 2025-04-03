@@ -73,165 +73,168 @@ export default function Contact() {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-900">
-      {/* Hero Section */}
-      <div className="relative isolate overflow-hidden bg-gradient-to-b from-primary/20 dark:from-primary/10">
-        <div className="mx-auto max-w-7xl pb-24 pt-10 sm:pb-32 lg:grid lg:grid-cols-2 lg:gap-x-8 lg:px-8 lg:py-40">
-          <div className="px-6 lg:px-0 lg:pt-4">
-            <div className="mx-auto max-w-2xl">
-              <div className="max-w-lg">
-                <h1 className="mt-10 text-4xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-6xl">
-                  Contáctanos
-                </h1>
-                <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-300">
-                  Estamos aquí para ayudarte a planificar tu próxima aventura. No dudes en contactarnos para cualquier consulta.
-                </p>
+    <div className="min-h-screen bg-gray-50 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Contáctanos</h1>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+            ¿Necesitas ayuda para planificar tu viaje a Oaxaca? 
+            Nuestro equipo de expertos locales está aquí para ayudarte a crear la experiencia perfecta.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Información de Contacto */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            className="bg-white rounded-lg shadow-lg p-8"
+          >
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Información de Contacto</h2>
+            
+            <div className="space-y-6">
+              <div className="flex items-start">
+                <div className="flex-shrink-0">
+                  <svg className="h-6 w-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </div>
+                <div className="ml-4">
+                  <h3 className="text-lg font-medium text-gray-900">Oficina Principal</h3>
+                  <p className="mt-1 text-gray-600">
+                    Av. Juárez 123, Centro Histórico<br />
+                    Oaxaca de Juárez, Oaxaca<br />
+                    C.P. 68000
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start">
+                <div className="flex-shrink-0">
+                  <svg className="h-6 w-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  </svg>
+                </div>
+                <div className="ml-4">
+                  <h3 className="text-lg font-medium text-gray-900">Teléfonos</h3>
+                  <p className="mt-1 text-gray-600">
+                    +52 (951) 123-4567<br />
+                    +52 (951) 987-6543
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start">
+                <div className="flex-shrink-0">
+                  <svg className="h-6 w-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <div className="ml-4">
+                  <h3 className="text-lg font-medium text-gray-900">Correo Electrónico</h3>
+                  <p className="mt-1 text-gray-600">
+                    info@valletour.com
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start">
+                <div className="flex-shrink-0">
+                  <svg className="h-6 w-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div className="ml-4">
+                  <h3 className="text-lg font-medium text-gray-900">Horario de Atención</h3>
+                  <p className="mt-1 text-gray-600">
+                    Lunes a Viernes: 9:00 - 18:00<br />
+                    Sábados: 9:00 - 14:00<br />
+                    Domingos: Cerrado
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-2">
-          {/* Información de Contacto */}
-          <div>
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
-              Información de Contacto
-            </h2>
-            <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
-              Encuentra la mejor manera de contactarnos según tus necesidades.
-            </p>
-
-            <dl className="mt-8 space-y-6">
-              {contactInfo.map((item) => (
-                <motion.div
-                  key={item.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="flex gap-x-4"
-                >
-                  <dt>
-                    <item.icon
-                      className="h-7 w-7 text-primary"
-                      aria-hidden="true"
-                    />
-                  </dt>
-                  <dd>
-                    <h3 className="text-base font-semibold text-gray-900 dark:text-white">
-                      {item.name}
-                    </h3>
-                    <p className="mt-1 text-gray-600 dark:text-gray-300">
-                      {item.description}
-                    </p>
-                  </dd>
-                </motion.div>
-              ))}
-            </dl>
-
-            {/* Mapa */}
-            <div className="mt-8 aspect-video w-full rounded-lg bg-gray-100 dark:bg-gray-800">
-              <iframe
-                title="Ubicación de ValleTour"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.964560140767!2d-77.03196518561798!3d-12.046654545143056!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8b5d35662c7%3A0x45c5b25d0d5d869e!2sPlaza%20Mayor%20de%20Lima!5e0!3m2!1ses-419!2spe!4v1647887421496!5m2!1ses-419!2spe"
-                className="h-full w-full rounded-lg"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-              />
-            </div>
-          </div>
+          </motion.div>
 
           {/* Formulario de Contacto */}
-          <div>
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
-              Envíanos un Mensaje
-            </h2>
-            <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
-              Completa el formulario y te responderemos lo antes posible.
-            </p>
-
-            <form onSubmit={handleSubmit} className="mt-8 space-y-6">
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Nombre completo
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    id="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="mt-2 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 dark:bg-gray-800 dark:text-white dark:ring-gray-700"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Correo electrónico
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="mt-2 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 dark:bg-gray-800 dark:text-white dark:ring-gray-700"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="phone"
-                    className="block text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Teléfono
-                  </label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    id="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className="mt-2 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 dark:bg-gray-800 dark:text-white dark:ring-gray-700"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="subject"
-                    className="block text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Asunto
-                  </label>
-                  <select
-                    name="subject"
-                    id="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    required
-                    className="mt-2 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 dark:bg-gray-800 dark:text-white dark:ring-gray-700"
-                  >
-                    <option value="">Selecciona un asunto</option>
-                    <option value="consulta">Consulta general</option>
-                    <option value="reserva">Reserva de viaje</option>
-                    <option value="cotizacion">Solicitud de cotización</option>
-                    <option value="otro">Otro</option>
-                  </select>
-                </div>
-              </div>
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            className="bg-white rounded-lg shadow-lg p-8"
+          >
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Envíanos un Mensaje</h2>
+            
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label
-                  htmlFor="message"
-                  className="block text-sm font-medium text-gray-900 dark:text-white"
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                  Nombre Completo
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  id="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+                  required
+                />
+              </div>
+
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                  Correo Electrónico
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+                  required
+                />
+              </div>
+
+              <div>
+                <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
+                  Teléfono
+                </label>
+                <input
+                  type="tel"
+                  name="phone"
+                  id="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="subject" className="block text-sm font-medium text-gray-700">
+                  Asunto
+                </label>
+                <select
+                  name="subject"
+                  id="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
+                  required
                 >
+                  <option value="">Selecciona un asunto</option>
+                  <option value="general">Consulta General</option>
+                  <option value="reservation">Reservación</option>
+                  <option value="tour">Tour Personalizado</option>
+                  <option value="group">Grupos</option>
+                  <option value="other">Otro</option>
+                </select>
+              </div>
+
+              <div>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700">
                   Mensaje
                 </label>
                 <textarea
@@ -240,38 +243,21 @@ export default function Contact() {
                   rows={4}
                   value={formData.message}
                   onChange={handleChange}
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary"
                   required
-                  className="mt-2 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 dark:bg-gray-800 dark:text-white dark:ring-gray-700"
                 />
               </div>
-
-              {submitStatus === 'success' && (
-                <div className="rounded-md bg-green-50 p-4 dark:bg-green-900/50">
-                  <p className="text-sm text-green-800 dark:text-green-200">
-                    ¡Mensaje enviado con éxito! Te contactaremos pronto.
-                  </p>
-                </div>
-              )}
-
-              {submitStatus === 'error' && (
-                <div className="rounded-md bg-red-50 p-4 dark:bg-red-900/50">
-                  <p className="text-sm text-red-800 dark:text-red-200">
-                    Hubo un error al enviar el mensaje. Por favor, intenta nuevamente.
-                  </p>
-                </div>
-              )}
 
               <div>
                 <button
                   type="submit"
-                  disabled={isSubmitting}
-                  className="inline-flex w-full justify-center rounded-md bg-primary px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-primary-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:opacity-50"
+                  className="w-full rounded-md bg-primary px-4 py-2 text-white hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                 >
-                  {isSubmitting ? 'Enviando...' : 'Enviar mensaje'}
+                  Enviar Mensaje
                 </button>
               </div>
             </form>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>

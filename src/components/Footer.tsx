@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom';
 
 const footerNavigation = {
   destinos: [
-    { name: 'Cusco', href: '/destinos/cusco' },
-    { name: 'Machu Picchu', href: '/destinos/machu-picchu' },
-    { name: 'Valle Sagrado', href: '/destinos/valle-sagrado' },
-    { name: 'Lima', href: '/destinos/lima' },
+    { name: 'Mitla', href: '/destinos/mitla' },
+    { name: 'Monte Albán', href: '/destinos/monte-alban' },
+    { name: 'Centro Historico de Oaxaca', href: '/destinos/centro-historico' },
+    { name: 'Bahías de Huatulco', href: '/destinos/bahias' },
   ],
   servicios: [
     { name: 'Tours Guiados', href: '/servicios#tours' },
@@ -73,12 +73,12 @@ export default function Footer() {
         <div className="xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="space-y-8">
             <img
-              className="h-12"
-              src="/logo.png"
+              className="h-auto w-auto"
+              src="/logo-2.png"
               alt="ValleTour"
             />
             <p className="text-sm leading-6 text-primary dark:text-gray-300">
-              Descubre los destinos más fascinantes de Perú con los mejores guías y servicios turísticos.
+              Descubre los destinos más fascinantes de Oaxaca con los mejores guías y servicios turísticos.
             </p>
             <div className="flex space-x-6">
               {footerNavigation.social.map((item) => (
@@ -90,7 +90,7 @@ export default function Footer() {
                   rel="noopener noreferrer"
                 >
                   <span className="sr-only">{item.name}</span>
-                  <item.icon className="h-6 w-6" aria-hidden="true" />
+                  <item.icon className="size-6" aria-hidden="true" />
                 </a>
               ))}
             </div>
@@ -162,7 +162,7 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <div className="mt-16 border-t border-gray-900/10 dark:border-primary-light pt-8 sm:mt-20 lg:mt-24">
+        <div className="mt-16 border-t border-gray-900/10 pt-8 dark:border-primary-light sm:mt-20 lg:mt-24">
           <p className="text-xs leading-5 text-gray-500 dark:text-gray-400">
             &copy; {new Date().getFullYear()} ValleTour. Todos los derechos reservados.
           </p>

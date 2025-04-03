@@ -36,7 +36,7 @@ export default function Navbar() {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <img className="h-8 w-auto" src="/logo.png" alt="ValleTour" />
+              <img className="h-48 w-auto" src="/logo.png" alt="ValleTour" />
             </Link>
             <div className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-8">
               <Link
@@ -100,7 +100,7 @@ export default function Navbar() {
               <span className="sr-only">Abrir menú principal</span>
               {!isOpen ? (
                 <svg
-                  className="block h-6 w-6"
+                  className="block size-6"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -115,7 +115,7 @@ export default function Navbar() {
                 </svg>
               ) : (
                 <svg
-                  className="block h-6 w-6"
+                  className="block size-6"
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
@@ -138,7 +138,7 @@ export default function Navbar() {
       <motion.div
         initial={false}
         animate={isOpen ? { height: 'auto' } : { height: 0 }}
-        className="sm:hidden overflow-hidden"
+        className="overflow-hidden sm:hidden"
       >
         <div className="space-y-1 pb-3 pt-2">
           <Link

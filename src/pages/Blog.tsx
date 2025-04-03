@@ -129,7 +129,7 @@ export default function Blog() {
         {/* Search and Categories */}
         <div className="mt-8 space-y-4">
           <div className="relative">
-            <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+            <MagnifyingGlassIcon className="absolute left-3 top-1/2 size-5 -translate-y-1/2 text-gray-400" />
             <input
               type="text"
               placeholder="Buscar artículos..."
@@ -170,9 +170,9 @@ export default function Blog() {
                 <img
                   src={post.image}
                   alt={post.title}
-                  className="h-full w-full object-cover"
+                  className="size-full object-cover"
                 />
-                <div className="absolute top-4 right-4 rounded-full bg-secondary px-3 py-1 text-sm font-semibold text-white">
+                <div className="absolute right-4 top-4 rounded-full bg-secondary px-3 py-1 text-sm font-semibold text-white">
                   {post.category}
                 </div>
               </div>
