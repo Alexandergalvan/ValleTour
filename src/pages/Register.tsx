@@ -53,7 +53,7 @@ export default function Register() {
         <div>
           <img
             className="mx-auto h-12 w-auto"
-            src="/logo.png"
+            src="/footer.png"
             alt="ValleTour"
           />
           <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-primary dark:text-white">

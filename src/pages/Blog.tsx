@@ -22,7 +22,7 @@ const blogPosts = [
     author: 'María González',
     date: '28 Mar 2024',
     readTime: '5 min',
-    image: 'https://images.unsplash.com/photo-1488085061387-422e29b40080',
+    image: '/blog/datos.webp',
     tags: ['Viajes', '2024', 'Tendencias'],
   },
   {
@@ -34,7 +34,7 @@ const blogPosts = [
     author: 'Carlos Ruiz',
     date: '27 Mar 2024',
     readTime: '8 min',
-    image: 'https://images.unsplash.com/photo-1512075135822-67cdd9dd7314',
+    image: '/blog/presupuesto.webp',
     tags: ['Presupuesto', 'Consejos', 'Ahorro'],
   },
   {
@@ -46,7 +46,7 @@ const blogPosts = [
     author: 'Ana Martínez',
     date: '26 Mar 2024',
     readTime: '6 min',
-    image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34',
+    image: '/blog/paris.webp',
     tags: ['París', 'Gastronomía', 'Restaurantes'],
   },
   {
@@ -58,7 +58,7 @@ const blogPosts = [
     author: 'Pedro Sánchez',
     date: '25 Mar 2024',
     readTime: '10 min',
-    image: 'https://images.unsplash.com/photo-1489493887464-892be6d1daae',
+    image: '/blog/andes.webp',
     tags: ['Trekking', 'Andes', 'Aventura'],
   },
   {
@@ -70,21 +70,9 @@ const blogPosts = [
     author: 'Laura Torres',
     date: '24 Mar 2024',
     readTime: '7 min',
-    image: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3',
+    image: '/blog/festivales.webp',
     tags: ['Festivales', 'Cultura', 'Eventos'],
-  },
-  {
-    id: 6,
-    title: 'Tips para Hacer las Maletas como un Pro',
-    excerpt:
-      'Aprende a empacar de manera eficiente y nunca más olvides nada importante.',
-    category: 'Consejos de Viaje',
-    author: 'Diego López',
-    date: '23 Mar 2024',
-    readTime: '4 min',
-    image: 'https://images.unsplash.com/photo-1484632152040-840239d678de',
-    tags: ['Equipaje', 'Consejos', 'Organización'],
-  },
+  }
 ];
 
 export default function Blog() {

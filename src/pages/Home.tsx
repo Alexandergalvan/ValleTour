@@ -7,7 +7,7 @@ const featuredDestinations = [
     id: 1,
     title: 'Monte Albán',
     description: 'Descubre la antigua ciudad zapoteca con nuestros guías expertos',
-    image: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1',
+    image: '/destinos/monte.webp',
     price: '899',
     features: ['Tour guiado', 'Transporte incluido', 'Entrada al sitio'],
   },
@@ -15,7 +15,7 @@ const featuredDestinations = [
     id: 2,
     title: 'Hierve el Agua',
     description: 'Explora las cascadas petrificadas y baños termales',
-    image: 'https://images.unsplash.com/photo-1552074284-5e88ef1aef18',
+    image: '/destinos/agua.webp',
     price: '699',
     features: ['Baños termales', 'Fotografía', 'Comida típica'],
   },
@@ -23,7 +23,7 @@ const featuredDestinations = [
     id: 3,
     title: 'Mitla',
     description: 'Vive la magia de la "Ciudad de los Muertos"',
-    image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34',
+    image: '/destinos/mitla.webp',
     price: '799',
     features: ['Visita guiada', 'Taller de textiles', 'Degustación de mezcal'],
   },
@@ -60,7 +60,7 @@ export default function Home() {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: 'url(https://images.unsplash.com/photo-1469854523086-cc02fe5d8800)',
+            backgroundImage: 'url(/hero.webp)',
           }}
         >
           <div className="absolute inset-0 bg-black/60" />
@@ -74,9 +74,9 @@ export default function Home() {
               transition={{ duration: 0.8 }}
               className="mb-8"
             >
-              <img 
-                src="/logo-alt.png" 
-                alt="ValleTour" 
+              <img
+                src="/logo-alt.png"
+                alt="ValleTour"
                 className="mx-auto h-24 w-auto"
               />
             </motion.div>

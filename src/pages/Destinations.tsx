@@ -7,7 +7,7 @@ const destinations = [
     id: 1,
     title: 'Monte Albán',
     description: 'Antigua ciudad zapoteca declarada Patrimonio de la Humanidad por la UNESCO.',
-    image: 'https://images.unsplash.com/photo-1587595431973-160d0d94add1',
+    image: '/destinos/monte.webp',
     category: 'Arqueología',
     price: '899',
     features: [
@@ -21,7 +21,7 @@ const destinations = [
     id: 2,
     title: 'Hierve el Agua',
     description: 'Formaciones rocosas naturales que simulan cascadas petrificadas.',
-    image: 'https://images.unsplash.com/photo-1552074284-5e88ef1aef18',
+    image: '/destinos/agua.webp',
     category: 'Naturaleza',
     price: '699',
     features: [
@@ -35,7 +35,7 @@ const destinations = [
     id: 3,
     title: 'Mitla',
     description: 'Ciudad zapoteca conocida por sus elaborados mosaicos geométricos.',
-    image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34',
+    image: '/destinos/mitla.webp',
     category: 'Arqueología',
     price: '799',
     features: [
@@ -49,7 +49,7 @@ const destinations = [
     id: 4,
     title: 'Centro Histórico de Oaxaca',
     description: 'Ciudad colonial con arquitectura barroca y tradiciones vivas.',
-    image: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800',
+    image: '/destinos/centro.webp',
     category: 'Cultura',
     price: '599',
     features: [
@@ -63,7 +63,7 @@ const destinations = [
     id: 5,
     title: 'Pueblos Mancomunados',
     description: 'Red de comunidades indígenas en la Sierra Norte de Oaxaca.',
-    image: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800',
+    image: '/destinos/pueblos.webp',
     category: 'Ecoturismo',
     price: '999',
     features: [
@@ -77,7 +77,7 @@ const destinations = [
     id: 6,
     title: 'Bahías de Huatulco',
     description: 'Complejo turístico con playas vírgenes y arrecifes de coral.',
-    image: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800',
+    image: '/destinos/bahias.webp',
     category: 'Playa',
     price: '1299',
     features: [
@@ -109,16 +109,15 @@ export default function Destinations() {
         </div>
 
         {/* Filtros de categoría */}
-        <div className="flex justify-center gap-4 mb-12">
+        <div className="flex justify-center gap-4 mb-12 w-[100%] overflow-x-scroll">
           {categories.map((category) => (
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-6 py-2 rounded-full transition-colors duration-300 ${
-                selectedCategory === category
-                  ? 'bg-primary text-white'
-                  : 'bg-white text-gray-700 hover:bg-gray-100'
-              }`}
+              className={`px-6 py-2 rounded-full transition-colors duration-300 ${selectedCategory === category
+                ? 'bg-primary text-white'
+                : 'bg-white text-gray-700 hover:bg-gray-100'
+                }`}
             >
               {category}
             </button>
