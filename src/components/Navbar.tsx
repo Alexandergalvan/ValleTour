@@ -36,46 +36,46 @@ export default function Navbar() {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <img className="h-48 w-auto" src="/logo.png" alt="ValleTour" />
+              <img className="h-8 w-auto" src="/logo.png" alt="ValleTour" />
             </Link>
-            <div className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-8">
-              <Link
-                to="/"
-                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-primary-light hover:text-secondary dark:text-gray-300 dark:hover:text-secondary-light"
-              >
-                Inicio
-              </Link>
-              <Link
-                to="/destinos"
-                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-primary-light hover:text-secondary dark:text-gray-300 dark:hover:text-secondary-light"
-              >
-                Destinos
-              </Link>
-              <Link
-                to="/servicios"
-                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-primary-light hover:text-secondary dark:text-gray-300 dark:hover:text-secondary-light"
-              >
-                Servicios
-              </Link>
-              <Link
-                to="/blog"
-                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-primary-light hover:text-secondary dark:text-gray-300 dark:hover:text-secondary-light"
-              >
-                Blog
-              </Link>
-              <Link
-                to="/nosotros"
-                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-primary-light hover:text-secondary dark:text-gray-300 dark:hover:text-secondary-light"
-              >
-                Nosotros
-              </Link>
-              <Link
-                to="/contacto"
-                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-primary-light hover:text-secondary dark:text-gray-300 dark:hover:text-secondary-light"
-              >
-                Contacto
-              </Link>
-            </div>
+          </div>
+          <div className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-8">
+            <Link
+              to="/"
+              className="inline-flex items-center px-1 pt-1 text-sm font-medium text-primary-light hover:text-secondary dark:text-gray-300 dark:hover:text-secondary-light"
+            >
+              Inicio
+            </Link>
+            <Link
+              to="/destinos"
+              className="inline-flex items-center px-1 pt-1 text-sm font-medium text-primary-light hover:text-secondary dark:text-gray-300 dark:hover:text-secondary-light"
+            >
+              Destinos
+            </Link>
+            <Link
+              to="/servicios"
+              className="inline-flex items-center px-1 pt-1 text-sm font-medium text-primary-light hover:text-secondary dark:text-gray-300 dark:hover:text-secondary-light"
+            >
+              Servicios
+            </Link>
+            <Link
+              to="/blog"
+              className="inline-flex items-center px-1 pt-1 text-sm font-medium text-primary-light hover:text-secondary dark:text-gray-300 dark:hover:text-secondary-light"
+            >
+              Blog
+            </Link>
+            <Link
+              to="/nosotros"
+              className="inline-flex items-center px-1 pt-1 text-sm font-medium text-primary-light hover:text-secondary dark:text-gray-300 dark:hover:text-secondary-light"
+            >
+              Nosotros
+            </Link>
+            <Link
+              to="/contacto"
+              className="inline-flex items-center px-1 pt-1 text-sm font-medium text-primary-light hover:text-secondary dark:text-gray-300 dark:hover:text-secondary-light"
+            >
+              Contacto
+            </Link>
           </div>
           <div className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-4">
             <Link

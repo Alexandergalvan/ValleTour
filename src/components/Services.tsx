@@ -33,7 +33,7 @@ const ServiceCard = ({ service }: { service: Service }) => (
         )}
       </div>
       <p className="text-gray-600 mb-4">{service.description}</p>
-      
+
       {service.price && (
         <div className="mb-4">
           <p className="text-primary font-medium">
@@ -67,10 +67,10 @@ export const Services = () => {
     <div className="py-12 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Servicios Turísticos en Oaxaca</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">Servicios Turísticos</h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            Descubre la magia de Oaxaca con nuestros servicios turísticos especializados. 
-            Desde hoteles coloniales hasta experiencias culturales auténticas, 
+            Descubre la magia de Oaxaca con nuestros servicios turísticos especializados.
+            Desde hoteles coloniales hasta experiencias culturales auténticas,
             te ofrecemos todo lo necesario para una experiencia inolvidable en el corazón de México.
           </p>
         </div>
@@ -80,11 +80,10 @@ export const Services = () => {
             <button
               key={category.id}
               onClick={() => setSelectedCategory(category.id)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${
-                selectedCategory === category.id
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors duration-200 ${selectedCategory === category.id
                   ? 'bg-primary text-white'
                   : 'bg-white text-gray-700 hover:bg-gray-100'
-              }`}
+                }`}
             >
               {category.name}
             </button>
@@ -99,7 +98,7 @@ export const Services = () => {
 
         <div className="mt-12 text-center">
           <p className="text-gray-600">
-            ¿Necesitas ayuda para planificar tu viaje a Oaxaca? 
+            ¿Necesitas ayuda para planificar tu viaje a Oaxaca?
             Contáctanos para recibir asesoría personalizada y crear el itinerario perfecto para ti.
           </p>
         </div>

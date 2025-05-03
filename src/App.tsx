@@ -38,7 +38,7 @@ function App() {
                 <Route path="/registro" element={<Register />} />
                 <Route path="/perfil" element={<Profile />} />
                 <Route path="/mis-viajes" element={<MyTrips />} />
-                <Route path="/planeador" element={<TripPlannerPage />} />
+                <Route path="/planificador" element={<TripPlannerPage />} />
               </Routes>
             </main>
             <Footer />

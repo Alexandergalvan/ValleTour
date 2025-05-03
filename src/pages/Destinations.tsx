@@ -102,7 +102,7 @@ export default function Destinations() {
     <div className="min-h-screen bg-gray-50 py-12">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Destinos en Oaxaca</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">Destinos Turísticos</h1>
           <p className="text-lg text-gray-600">
             Descubre los lugares más emblemáticos y experiencias únicas que Oaxaca tiene para ti
           </p>

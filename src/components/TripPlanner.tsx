@@ -205,7 +205,7 @@ const TripPlanner = () => {
                   className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary"
                 />
               </div>
-              
+
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
                   Duración del viaje
@@ -224,15 +224,15 @@ const TripPlanner = () => {
                     onChange={(e) => setPreferences(prev => ({ ...prev, duration: parseInt(e.target.value) }))}
                     className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-primary"
                   />
-                  <motion.p 
+                  <motion.p
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     className="text-center text-gray-600 italic"
                   >
                     {preferences.duration === 1 ? 'Un día perfecto para una visita rápida' :
-                     preferences.duration <= 3 ? 'Tiempo ideal para conocer los lugares principales' :
-                     preferences.duration <= 7 ? 'Una semana llena de experiencias inolvidables' :
-                     'Una experiencia completa de Oaxaca'}
+                      preferences.duration <= 3 ? 'Tiempo ideal para conocer los lugares principales' :
+                        preferences.duration <= 7 ? 'Una semana llena de experiencias inolvidables' :
+                          'Una experiencia completa de Oaxaca'}
                   </motion.p>
                 </div>
               </div>
@@ -256,11 +256,10 @@ const TripPlanner = () => {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => setPreferences(prev => ({ ...prev, budget: option.id }))}
-                  className={`p-6 rounded-xl border-2 text-left transition-all ${
-                    preferences.budget === option.id
+                  className={`p-6 rounded-xl border-2 text-left transition-all ${preferences.budget === option.id
                       ? 'border-primary bg-primary/5 shadow-lg'
                       : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center justify-between">
                     <div>
@@ -303,11 +302,10 @@ const TripPlanner = () => {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => handleMultiSelect('interests', interest)}
-                  className={`p-4 rounded-xl border-2 transition-all ${
-                    preferences.interests.includes(interest)
+                  className={`p-4 rounded-xl border-2 transition-all ${preferences.interests.includes(interest)
                       ? 'border-primary bg-primary/5 shadow-lg'
                       : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center space-x-3">
                     {preferences.interests.includes(interest) ? (
@@ -347,11 +345,10 @@ const TripPlanner = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setPreferences(prev => ({ ...prev, travelStyle: style.id }))}
-                  className={`p-6 rounded-xl border-2 transition-all ${
-                    preferences.travelStyle === style.id
+                  className={`p-6 rounded-xl border-2 transition-all ${preferences.travelStyle === style.id
                       ? 'border-primary bg-primary/5 shadow-lg'
                       : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
-                  }`}
+                    }`}
                 >
                   <div className="text-lg font-medium">{style.label}</div>
                 </motion.button>
@@ -376,11 +373,10 @@ const TripPlanner = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setPreferences(prev => ({ ...prev, accommodation: acc.id }))}
-                  className={`p-6 rounded-xl border-2 transition-all ${
-                    preferences.accommodation === acc.id
+                  className={`p-6 rounded-xl border-2 transition-all ${preferences.accommodation === acc.id
                       ? 'border-primary bg-primary/5 shadow-lg'
                       : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
-                  }`}
+                    }`}
                 >
                   <div className="text-lg font-medium">{acc.label}</div>
                 </motion.button>
@@ -405,11 +401,10 @@ const TripPlanner = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setPreferences(prev => ({ ...prev, transportation: trans.id }))}
-                  className={`p-6 rounded-xl border-2 transition-all ${
-                    preferences.transportation === trans.id
+                  className={`p-6 rounded-xl border-2 transition-all ${preferences.transportation === trans.id
                       ? 'border-primary bg-primary/5 shadow-lg'
                       : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
-                  }`}
+                    }`}
                 >
                   <div className="text-lg font-medium">{trans.label}</div>
                 </motion.button>
@@ -452,9 +447,9 @@ const TripPlanner = () => {
               </div>
               <p className="text-center text-gray-600 italic">
                 {preferences.groupSize === 1 ? 'Viaje individual' :
-                 preferences.groupSize === 2 ? 'Perfecto para una experiencia en pareja' :
-                 preferences.groupSize <= 4 ? 'Grupo pequeño ideal para experiencias personalizadas' :
-                 'Grupo grande - Recomendamos reservar con anticipación'}
+                  preferences.groupSize === 2 ? 'Perfecto para una experiencia en pareja' :
+                    preferences.groupSize <= 4 ? 'Grupo pequeño ideal para experiencias personalizadas' :
+                      'Grupo grande - Recomendamos reservar con anticipación'}
               </p>
             </div>
           </motion.div>
@@ -477,11 +472,10 @@ const TripPlanner = () => {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => handleMultiSelect('mealPreferences', pref)}
-                  className={`p-4 rounded-xl border-2 transition-all ${
-                    preferences.mealPreferences.includes(pref)
+                  className={`p-4 rounded-xl border-2 transition-all ${preferences.mealPreferences.includes(pref)
                       ? 'border-primary bg-primary/5 shadow-lg'
                       : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center space-x-3">
                     {preferences.mealPreferences.includes(pref) ? (
@@ -522,11 +516,10 @@ const TripPlanner = () => {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => handleMultiSelect('activities', activity)}
-                  className={`p-4 rounded-xl border-2 transition-all ${
-                    preferences.activities.includes(activity)
+                  className={`p-4 rounded-xl border-2 transition-all ${preferences.activities.includes(activity)
                       ? 'border-primary bg-primary/5 shadow-lg'
                       : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center space-x-3">
                     {preferences.activities.includes(activity) ? (
@@ -567,11 +560,10 @@ const TripPlanner = () => {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => handleMultiSelect('accessibility', option)}
-                  className={`p-4 rounded-xl border-2 transition-all ${
-                    preferences.accessibility.includes(option)
+                  className={`p-4 rounded-xl border-2 transition-all ${preferences.accessibility.includes(option)
                       ? 'border-primary bg-primary/5 shadow-lg'
                       : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center space-x-3">
                     {preferences.accessibility.includes(option) ? (
@@ -612,11 +604,10 @@ const TripPlanner = () => {
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => handleMultiSelect('languages', lang)}
-                  className={`p-4 rounded-xl border-2 transition-all ${
-                    preferences.languages.includes(lang)
+                  className={`p-4 rounded-xl border-2 transition-all ${preferences.languages.includes(lang)
                       ? 'border-primary bg-primary/5 shadow-lg'
                       : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center space-x-3">
                     {preferences.languages.includes(lang) ? (
@@ -727,22 +718,22 @@ const TripPlanner = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto">
-      <div className="mb-12">
-        <h2 className="text-3xl font-bold text-center mb-4 text-primary">Planificador de Viaje</h2>
-        <p className="text-lg text-gray-600 text-center">
-          Personaliza tu experiencia en Oaxaca
+    <div className="w-full">
+      <div className="mb-8">
+        <h2 className="text-3xl font-bold text-primary mb-2">Planificador de Viaje</h2>
+        <p className="text-lg text-gray-600">
+          Personaliza tu experiencia en Oaxaca paso a paso
         </p>
       </div>
 
-      <div className="mb-12">
+      <div className="mb-8">
         <div className="flex justify-between items-center relative">
           <div className="absolute left-0 right-0 top-1/2 h-1 bg-gray-200 -z-10" />
           {steps.map((s) => (
             <motion.div
               key={s.id}
               initial={s.id === 1 ? { scale: 1 } : { scale: 0.8 }}
-              animate={s.id <= step ? { 
+              animate={s.id <= step ? {
                 scale: 1,
                 backgroundColor: s.id === step ? '#4F46E5' : '#3730A3',
                 transition: { duration: 0.2 }
@@ -751,7 +742,7 @@ const TripPlanner = () => {
                 backgroundColor: '#E5E7EB',
                 transition: { duration: 0.2 }
               }}
-              className="w-8 h-8 rounded-full flex items-center justify-center text-white font-medium relative z-10 cursor-pointer"
+              className="w-10 h-10 rounded-full flex items-center justify-center text-white font-medium relative z-10 cursor-pointer hover:scale-105 transition-transform"
               onClick={() => s.id < step && setStep(s.id)}
               title={s.title}
             >
@@ -769,26 +760,33 @@ const TripPlanner = () => {
             </motion.div>
           ))}
         </div>
+        <div className="mt-4 text-center">
+          <span className="text-sm font-medium text-primary">
+            {steps[step - 1].title}
+          </span>
+        </div>
       </div>
 
-      <div className="min-h-[400px] flex flex-col">
+      <div className="min-h-[500px] flex flex-col">
         <AnimatePresence mode="wait">
           {renderStep()}
         </AnimatePresence>
 
-        <div className="mt-12 flex justify-between">
+        <div className="mt-12 flex justify-between items-center">
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={prevStep}
             disabled={step === 1}
-            className={`px-6 py-3 rounded-xl font-medium transition-all ${
-              step === 1
+            className={`px-6 py-3 rounded-xl font-medium transition-all flex items-center space-x-2 ${step === 1
                 ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-            }`}
+              }`}
           >
-            Anterior
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            <span>Anterior</span>
           </motion.button>
 
           {step === steps.length ? (
@@ -814,9 +812,12 @@ const TripPlanner = () => {
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               onClick={nextStep}
-              className="px-6 py-3 bg-primary text-white rounded-xl font-medium hover:bg-primary-dark transition-all"
+              className="px-6 py-3 bg-primary text-white rounded-xl font-medium hover:bg-primary-dark transition-all flex items-center space-x-2"
             >
-              Siguiente
+              <span>Siguiente</span>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
             </motion.button>
           )}
         </div>

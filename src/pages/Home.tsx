@@ -77,17 +77,17 @@ export default function Home() {
               <img
                 src="/logo-alt.png"
                 alt="ValleTour"
-                className="mx-auto h-24 w-auto"
+                className="mx-auto h-16 w-auto"
               />
             </motion.div>
-            <motion.h1
+            {/* <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               className="text-4xl font-bold tracking-tight text-white sm:text-6xl"
             >
-              ValleTour Oaxaca
-            </motion.h1>
+              ¡Que el mundo sea tuyo!
+            </motion.h1> */}
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -100,17 +100,17 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="mt-10 space-x-4"
+              className="mt-10 flex flex-col items-center justify-center gap-6 lg:flex-row"
             >
               <Link
                 to="/destinos"
-                className="inline-block rounded-lg bg-secondary px-6 py-3 text-lg font-semibold text-white transition-colors hover:bg-secondary-dark"
+                className="inline-block w-64 rounded-lg bg-secondary px-6 py-3 text-lg font-semibold text-white transition-colors hover:bg-secondary-dark"
               >
                 Explorar Destinos
               </Link>
               <Link
-                to="/contacto"
-                className="inline-block rounded-lg bg-white/10 px-6 py-3 text-lg font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/20"
+                to="/planificador"
+                className="inline-block w-64 rounded-lg bg-white/10 px-6 py-3 text-lg font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/20"
               >
                 Planificar Viaje
               </Link>
@@ -121,9 +121,9 @@ export default function Home() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 1 }}
-            className="absolute bottom-10 left-1/2 -translate-x-1/2"
+            className="absolute bottom-20 left-1/2 -translate-x-1/2"
           >
-            <ChevronDownIcon className="size-8 animate-bounce text-white" />
+            <ChevronDownIcon className="size-8 animate-bounce text-white lg:size-11" />
           </motion.div>
         </div>
       </section>
@@ -222,56 +222,26 @@ export default function Home() {
       </section>
 
       {/* Planifica tu Viaje */}
-      <section className="py-16 bg-gray-50">
+      <section className="bg-gray-50 py-16">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Planifica tu Viaje</h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <div className="mb-12 text-center">
+            <h2 className="mb-4 text-3xl font-bold text-gray-900">Planifica tu Viaje</h2>
+            <p className="mx-auto max-w-2xl text-lg text-gray-600">
               Personaliza tu experiencia en Oaxaca con nuestro planificador de viajes interactivo.
               Obtén un itinerario personalizado basado en tus preferencias.
             </p>
           </div>
-          <div className="max-w-2xl mx-auto">
+          <div className="mx-auto flex max-w-2xl items-center justify-center">
             <Link
-              to="/planeador"
-              className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primary-dark transition-colors duration-200"
+              to="/planificador"
+              className="inline-flex items-center justify-center rounded-md border border-transparent bg-primary px-6 py-3 text-base font-medium text-white transition-colors duration-200 hover:bg-primary-dark"
             >
               Comenzar a Planificar
-              <svg className="ml-2 -mr-1 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="-mr-1 ml-2 size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
             </Link>
           </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="bg-primary py-16 text-white">
-        <div className="container text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-3xl font-bold">¿Listo para tu Aventura en Oaxaca?</h2>
-            <p className="mt-4 text-lg text-gray-300">
-              Permítenos ser tu guía en este viaje inolvidable por la riqueza cultural de Oaxaca
-            </p>
-            <div className="mt-8 space-x-4">
-              <Link
-                to="/contacto"
-                className="inline-block rounded-lg bg-white px-6 py-3 text-lg font-semibold text-primary transition-colors hover:bg-gray-100"
-              >
-                Planifica tu Viaje
-              </Link>
-              <Link
-                to="/servicios"
-                className="inline-block rounded-lg bg-white/10 px-6 py-3 text-lg font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/20"
-              >
-                Ver Servicios
-              </Link>
-            </div>
-          </motion.div>
         </div>
       </section>
     </div>
