@@ -257,8 +257,8 @@ const TripPlanner = () => {
                   whileTap={{ scale: 0.98 }}
                   onClick={() => setPreferences(prev => ({ ...prev, budget: option.id }))}
                   className={`p-6 rounded-xl border-2 text-left transition-all ${preferences.budget === option.id
-                      ? 'border-primary bg-primary/5 shadow-lg'
-                      : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
+                    ? 'border-primary bg-primary/5 shadow-lg'
+                    : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
                     }`}
                 >
                   <div className="flex items-center justify-between">
@@ -303,8 +303,8 @@ const TripPlanner = () => {
                   whileTap={{ scale: 0.98 }}
                   onClick={() => handleMultiSelect('interests', interest)}
                   className={`p-4 rounded-xl border-2 transition-all ${preferences.interests.includes(interest)
-                      ? 'border-primary bg-primary/5 shadow-lg'
-                      : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
+                    ? 'border-primary bg-primary/5 shadow-lg'
+                    : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
                     }`}
                 >
                   <div className="flex items-center space-x-3">
@@ -346,8 +346,8 @@ const TripPlanner = () => {
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setPreferences(prev => ({ ...prev, travelStyle: style.id }))}
                   className={`p-6 rounded-xl border-2 transition-all ${preferences.travelStyle === style.id
-                      ? 'border-primary bg-primary/5 shadow-lg'
-                      : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
+                    ? 'border-primary bg-primary/5 shadow-lg'
+                    : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
                     }`}
                 >
                   <div className="text-lg font-medium">{style.label}</div>
@@ -374,8 +374,8 @@ const TripPlanner = () => {
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setPreferences(prev => ({ ...prev, accommodation: acc.id }))}
                   className={`p-6 rounded-xl border-2 transition-all ${preferences.accommodation === acc.id
-                      ? 'border-primary bg-primary/5 shadow-lg'
-                      : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
+                    ? 'border-primary bg-primary/5 shadow-lg'
+                    : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
                     }`}
                 >
                   <div className="text-lg font-medium">{acc.label}</div>
@@ -402,8 +402,8 @@ const TripPlanner = () => {
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setPreferences(prev => ({ ...prev, transportation: trans.id }))}
                   className={`p-6 rounded-xl border-2 transition-all ${preferences.transportation === trans.id
-                      ? 'border-primary bg-primary/5 shadow-lg'
-                      : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
+                    ? 'border-primary bg-primary/5 shadow-lg'
+                    : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
                     }`}
                 >
                   <div className="text-lg font-medium">{trans.label}</div>
@@ -473,8 +473,8 @@ const TripPlanner = () => {
                   whileTap={{ scale: 0.98 }}
                   onClick={() => handleMultiSelect('mealPreferences', pref)}
                   className={`p-4 rounded-xl border-2 transition-all ${preferences.mealPreferences.includes(pref)
-                      ? 'border-primary bg-primary/5 shadow-lg'
-                      : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
+                    ? 'border-primary bg-primary/5 shadow-lg'
+                    : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
                     }`}
                 >
                   <div className="flex items-center space-x-3">
@@ -517,8 +517,8 @@ const TripPlanner = () => {
                   whileTap={{ scale: 0.98 }}
                   onClick={() => handleMultiSelect('activities', activity)}
                   className={`p-4 rounded-xl border-2 transition-all ${preferences.activities.includes(activity)
-                      ? 'border-primary bg-primary/5 shadow-lg'
-                      : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
+                    ? 'border-primary bg-primary/5 shadow-lg'
+                    : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
                     }`}
                 >
                   <div className="flex items-center space-x-3">
@@ -561,8 +561,8 @@ const TripPlanner = () => {
                   whileTap={{ scale: 0.98 }}
                   onClick={() => handleMultiSelect('accessibility', option)}
                   className={`p-4 rounded-xl border-2 transition-all ${preferences.accessibility.includes(option)
-                      ? 'border-primary bg-primary/5 shadow-lg'
-                      : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
+                    ? 'border-primary bg-primary/5 shadow-lg'
+                    : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
                     }`}
                 >
                   <div className="flex items-center space-x-3">
@@ -605,8 +605,8 @@ const TripPlanner = () => {
                   whileTap={{ scale: 0.98 }}
                   onClick={() => handleMultiSelect('languages', lang)}
                   className={`p-4 rounded-xl border-2 transition-all ${preferences.languages.includes(lang)
-                      ? 'border-primary bg-primary/5 shadow-lg'
-                      : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
+                    ? 'border-primary bg-primary/5 shadow-lg'
+                    : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
                     }`}
                 >
                   <div className="flex items-center space-x-3">
@@ -779,8 +779,8 @@ const TripPlanner = () => {
             onClick={prevStep}
             disabled={step === 1}
             className={`px-6 py-3 rounded-xl font-medium transition-all flex items-center space-x-2 ${step === 1
-                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
