@@ -1,0 +1,13 @@
+[build]
+  command = "yarn build"
+  publish = "build"
+
+# Redirección para Single Page Applications
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Variables de entorno para producción
+[build.environment]
+  REACT_APP_API_URL = "https://valletour-api.onrender.com" 

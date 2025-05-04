@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const featuredDestinations = [
   {
-    id: 1,
+    id: "monte-alban",
     title: 'Monte Albán',
     description: 'Descubre la antigua ciudad zapoteca con nuestros guías expertos',
     image: '/destinos/monte.webp',
@@ -12,7 +12,7 @@ const featuredDestinations = [
     features: ['Tour guiado', 'Transporte incluido', 'Entrada al sitio'],
   },
   {
-    id: 2,
+    id: "hierve-el-agua",
     title: 'Hierve el Agua',
     description: 'Explora las cascadas petrificadas y baños termales',
     image: '/destinos/agua.webp',
@@ -20,7 +20,7 @@ const featuredDestinations = [
     features: ['Baños termales', 'Fotografía', 'Comida típica'],
   },
   {
-    id: 3,
+    id: "mitla",
     title: 'Mitla',
     description: 'Vive la magia de la "Ciudad de los Muertos"',
     image: '/destinos/mitla.webp',
@@ -131,7 +131,7 @@ export default function Home() {
       {/* Featured Destinations */}
       <section className="py-16">
         <div className="container">
-          <div className="text-center mb-12">
+          <div className="mb-12 text-center">
             <h2 className="text-3xl font-bold text-primary dark:text-white">
               Destinos Destacados
             </h2>
@@ -141,19 +141,20 @@ export default function Home() {
           </div>
           <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {featuredDestinations.map((destination) => (
-              <motion.div
-                key={destination.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
+              <Link to={`/destinos/${destination.id}`} key={destination.id}>
+                <motion.div
+                  key={destination.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
                 className="group relative overflow-hidden rounded-lg bg-white shadow-lg dark:bg-primary-light"
               >
                 <div className="relative h-64 overflow-hidden">
                   <img
                     src={destination.image}
                     alt={destination.title}
-                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    className="size-full object-cover transition-transform duration-300 group-hover:scale-110"
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
@@ -180,6 +181,7 @@ export default function Home() {
                   </p>
                 </div>
               </motion.div>
+              </Link>
             ))}
           </div>
         </div>
@@ -188,7 +190,7 @@ export default function Home() {
       {/* Benefits */}
       <section className="bg-gray-50 py-16 dark:bg-gray-800">
         <div className="container">
-          <div className="text-center mb-12">
+          <div className="mb-12 text-center">
             <h2 className="text-3xl font-bold text-primary dark:text-white">
               ¿Por qué Elegir ValleTour?
             </h2>

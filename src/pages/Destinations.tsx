@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const destinations = [
   {
-    id: 1,
+    id: "monte-alban",
     title: 'Monte Albán',
     description: 'Antigua ciudad zapoteca declarada Patrimonio de la Humanidad por la UNESCO.',
     image: '/destinos/monte.webp',
@@ -18,7 +18,7 @@ const destinations = [
     ]
   },
   {
-    id: 2,
+    id: "hierve-el-agua",
     title: 'Hierve el Agua',
     description: 'Formaciones rocosas naturales que simulan cascadas petrificadas.',
     image: '/destinos/agua.webp',
@@ -32,7 +32,7 @@ const destinations = [
     ]
   },
   {
-    id: 3,
+    id: "mitla",
     title: 'Mitla',
     description: 'Ciudad zapoteca conocida por sus elaborados mosaicos geométricos.',
     image: '/destinos/mitla.webp',
@@ -46,7 +46,7 @@ const destinations = [
     ]
   },
   {
-    id: 4,
+    id: "centro-historico",
     title: 'Centro Histórico de Oaxaca',
     description: 'Ciudad colonial con arquitectura barroca y tradiciones vivas.',
     image: '/destinos/centro.webp',
@@ -60,7 +60,7 @@ const destinations = [
     ]
   },
   {
-    id: 5,
+    id: "pueblos-mancomunados",
     title: 'Pueblos Mancomunados',
     description: 'Red de comunidades indígenas en la Sierra Norte de Oaxaca.',
     image: '/destinos/pueblos.webp',
@@ -74,7 +74,7 @@ const destinations = [
     ]
   },
   {
-    id: 6,
+    id: "bahias-huatulco",
     title: 'Bahías de Huatulco',
     description: 'Complejo turístico con playas vírgenes y arrecifes de coral.',
     image: '/destinos/bahias.webp',

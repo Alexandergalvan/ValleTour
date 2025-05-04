@@ -1,6 +1,8 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { UserProvider } from './context/UserContext';
+import { PresentationProvider } from './context/PresentationContext';
+import { AnimatePresence } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -13,36 +15,110 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import DestinationDetailsPage from './pages/DestinationDetailsPage';
 import TripPlannerPage from './pages/TripPlannerPage';
+import PresentationMode from './components/PresentationMode';
+import PageTransition from './components/PageTransition';
+import { usePresentationMode } from './context/PresentationContext';
 
 // Importación de páginas (se crearán después)
 const Profile = () => <div>Página de Perfil</div>;
 const MyTrips = () => <div>Mis Viajes</div>;
+
+// Componente interno para manejar las animaciones de ruta
+const AnimatedRoutes = () => {
+  const location = useLocation();
+  const { presentationMode, presentationInterval, customRoutes } = usePresentationMode();
+
+  return (
+    <>
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={
+            <PageTransition presentationMode={presentationMode}>
+              <Home />
+            </PageTransition>
+          } />
+          <Route path="/destinos" element={
+            <PageTransition presentationMode={presentationMode}>
+              <Destinations />
+            </PageTransition>
+          } />
+          <Route path="/destinos/:id" element={
+            <PageTransition presentationMode={presentationMode}>
+              <DestinationDetailsPage />
+            </PageTransition>
+          } />
+          <Route path="/servicios" element={
+            <PageTransition presentationMode={presentationMode}>
+              <Services />
+            </PageTransition>
+          } />
+          <Route path="/blog" element={
+            <PageTransition presentationMode={presentationMode}>
+              <Blog />
+            </PageTransition>
+          } />
+          <Route path="/nosotros" element={
+            <PageTransition presentationMode={presentationMode}>
+              <About />
+            </PageTransition>
+          } />
+          <Route path="/contacto" element={
+            <PageTransition presentationMode={presentationMode}>
+              <Contact />
+            </PageTransition>
+          } />
+          <Route path="/login" element={
+            <PageTransition presentationMode={presentationMode}>
+              <Login />
+            </PageTransition>
+          } />
+          <Route path="/registro" element={
+            <PageTransition presentationMode={presentationMode}>
+              <Register />
+            </PageTransition>
+          } />
+          <Route path="/perfil" element={
+            <PageTransition presentationMode={presentationMode}>
+              <Profile />
+            </PageTransition>
+          } />
+          <Route path="/mis-viajes" element={
+            <PageTransition presentationMode={presentationMode}>
+              <MyTrips />
+            </PageTransition>
+          } />
+          <Route path="/planificador" element={
+            <PageTransition presentationMode={presentationMode}>
+              <TripPlannerPage />
+            </PageTransition>
+          } />
+        </Routes>
+      </AnimatePresence>
+
+      {/* Componente de Modo Presentación */}
+      <PresentationMode
+        enabled={presentationMode}
+        interval={presentationInterval}
+        routes={customRoutes || undefined}
+      />
+    </>
+  );
+};
 
 function App() {
   return (
     <Router>
       <AuthProvider>
         <UserProvider>
-          <div className="flex min-h-screen flex-col bg-gray-50 dark:bg-gray-900">
-            <Navbar />
-            <main className="grow">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/destinos" element={<Destinations />} />
-                <Route path="/destinos/:id" element={<DestinationDetailsPage />} />
-                <Route path="/servicios" element={<Services />} />
-                <Route path="/blog" element={<Blog />} />
-                <Route path="/nosotros" element={<About />} />
-                <Route path="/contacto" element={<Contact />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/registro" element={<Register />} />
-                <Route path="/perfil" element={<Profile />} />
-                <Route path="/mis-viajes" element={<MyTrips />} />
-                <Route path="/planificador" element={<TripPlannerPage />} />
-              </Routes>
-            </main>
-            <Footer />
-          </div>
+          <PresentationProvider>
+            <div className="flex min-h-screen flex-col bg-gray-50 dark:bg-gray-900">
+              <Navbar />
+              <main className="grow">
+                <AnimatedRoutes />
+              </main>
+              <Footer />
+            </div>
+          </PresentationProvider>
         </UserProvider>
       </AuthProvider>
     </Router>
