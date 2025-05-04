@@ -75,7 +75,7 @@ export default function Home() {
               className="mb-8"
             >
               <img
-                src="/logo-alt.png"
+                src="/logo-alt.webp"
                 alt="ValleTour"
                 className="mx-auto h-16 w-auto"
               />

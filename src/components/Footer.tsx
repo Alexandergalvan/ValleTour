@@ -250,7 +250,7 @@ export default function Footer() {
           <div className="space-y-8">
             <img
               className="h-12 w-auto"
-              src="/logo-2.png"
+              src="/logo.webp"
               alt="ValleTour"
             />
             <p className="text-sm leading-6 text-primary dark:text-gray-300">

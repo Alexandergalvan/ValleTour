@@ -11,35 +11,35 @@ const teamMembers = [
   {
     name: 'Sally Yuritzy',
     role: 'CEO & Fundadora',
-    image: '/team/sally.jpg',
+    image: '/team/sally.webp',
     description:
       'Con más de 15 años de experiencia en el sector turístico, Sally fundó ValleTour con la visión de crear experiencias únicas y memorables.',
   },
   {
     name: 'Eduardo Del Angel',
     role: 'Director de Operaciones',
-    image: '/team/eduardo.jpg',
+    image: '/team/eduardo.webp',
     description:
       'Experto en logística y operaciones, Eduardo asegura que cada viaje sea perfecto hasta el último detalle.',
   },
   {
     name: 'Sarahi Alvarez',
     role: 'Directora de Experiencias',
-    image: '/team/sarahi.jpg',
+    image: '/team/sarahi.webp',
     description:
       'Sarahi se especializa en crear itinerarios únicos que combinan aventura, cultura y autenticidad.',
   },
   {
     name: 'Alexander Galvan',
     role: 'Director de Tecnología',
-    image: '/team/alexander.jpg',
+    image: '/team/alexander.webp',
     description:
       'Alexander lidera la transformación digital de ValleTour, mejorando la experiencia de nuestros clientes.',
   },
   {
     name: 'Homero Treviño',
     role: 'Director de Marketing y Ventas',
-    image: '/team/homero.jpg',
+    image: '/team/homero.webp',
     description:
       'Homero lidera el equipo de marketing y ventas, asegurando que nuestros clientes encuentren la mejor experiencia de viaje.',
   },

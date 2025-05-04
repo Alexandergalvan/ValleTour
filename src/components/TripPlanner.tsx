@@ -4,7 +4,7 @@ import TripPDF from '../components/TripPDF';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Constante con la URL base del servidor - usar la variable de entorno o un valor por defecto
-const SERVER_URL = process.env.REACT_APP_API_URL || 'https://valletour-api.onrender.com';
+const SERVER_URL = "https://valletour-api.vercel.app"
 
 interface Step {
   id: number;
