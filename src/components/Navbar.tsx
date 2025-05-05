@@ -38,7 +38,7 @@ export default function Navbar() {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
             <Link to="/" className="flex items-center">
-              <img className="h-8 w-auto" src="/logo.png" alt="ValleTour" />
+              <img className="h-8 w-auto" src="/logo.webp" alt="ValleTour" />
             </Link>
           </div>
           <div className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-8">
