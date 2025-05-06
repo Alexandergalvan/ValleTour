@@ -2,26 +2,29 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
+import { UserCredentials } from '../services/auth';
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [credentials, setCredentials] = useState<UserCredentials>({
+    email: '',
+    password: ''
+  });
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, error, loading, clearError } = useAuth();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setCredentials(prev => ({ ...prev, [name]: value }));
+    if (error) clearError();
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      setError('');
-      setLoading(true);
-      await login(email, password);
+    
+    const result = await login(credentials);
+    
+    if (result.success) {
       navigate('/');
-    } catch (err) {
-      setError('Error al iniciar sesión. Por favor, verifica tus credenciales.');
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -74,8 +77,8 @@ export default function Login() {
                 type="email"
                 autoComplete="email"
                 required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={credentials.email}
+                onChange={handleChange}
                 className="input-primary"
                 placeholder="juan@ejemplo.com"
               />
@@ -90,8 +93,8 @@ export default function Login() {
                 type="password"
                 autoComplete="current-password"
                 required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={credentials.password}
+                onChange={handleChange}
                 className="input-primary"
                 placeholder="••••••••"
               />

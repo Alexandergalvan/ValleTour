@@ -295,9 +295,9 @@ export const DestinationDetails = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/60" />
         <div className="absolute inset-x-0 bottom-0 p-6 text-white md:p-12">
           <div className="container mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
             >
               <div className="mb-4 flex flex-wrap items-center gap-4">
@@ -326,10 +326,10 @@ export const DestinationDetails = () => {
             <a href="#servicios" className="whitespace-nowrap hover:text-secondary">Servicios incluidos</a>
             <a href="#informacion" className="whitespace-nowrap hover:text-secondary">Información importante</a>
           </div>
-        </div>
-      </div>
+            </div>
+          </div>
 
-      {/* Contenido principal */}
+          {/* Contenido principal */}
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-3">
           {/* Columna principal - contenido */}
@@ -412,14 +412,14 @@ export const DestinationDetails = () => {
             <section id="servicios" className="mb-12">
               <h2 className="mb-6 text-3xl font-bold text-primary-700">Servicios incluidos</h2>
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                {destination.includedServices.map((service, index) => (
+                  {destination.includedServices.map((service, index) => (
                   <div key={index} className="flex items-center rounded-lg bg-gray-50 p-4">
                     <svg className="mr-3 size-6 shrink-0 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                    </svg>
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
                     <span className="text-gray-700">{service}</span>
                   </div>
-                ))}
+                  ))}
               </div>
             </section>
           </div>
@@ -457,9 +457,9 @@ export const DestinationDetails = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                       </svg>
-                      <div>
+                    <div>
                         <span className="block font-medium text-secondary">Ubicación:</span>
-                        <p className="text-gray-600">{destination.location}</p>
+                      <p className="text-gray-600">{destination.location}</p>
                       </div>
                     </div>
                     
@@ -467,9 +467,9 @@ export const DestinationDetails = () => {
                       <svg className="mr-3 mt-1 size-5 shrink-0 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                      <div>
+                    <div>
                         <span className="block font-medium text-secondary">Duración:</span>
-                        <p className="text-gray-600">{destination.duration}</p>
+                      <p className="text-gray-600">{destination.duration}</p>
                       </div>
                     </div>
                     
@@ -477,14 +477,14 @@ export const DestinationDetails = () => {
                       <svg className="mr-3 mt-1 size-5 shrink-0 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
                       </svg>
-                      <div>
+                    <div>
                         <span className="block font-medium text-secondary">Mejor época:</span>
-                        <p className="text-gray-600">{destination.bestTimeToVisit}</p>
+                      <p className="text-gray-600">{destination.bestTimeToVisit}</p>
                       </div>
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="border-t border-gray-200 bg-gray-50 p-6">
                   <div className="flex items-center justify-center space-x-4">
                     <button 
@@ -501,7 +501,7 @@ export const DestinationDetails = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                       </svg>
                       Guardar
-                    </button>
+                  </button>
                   </div>
                 </div>
               </div>
@@ -544,9 +544,9 @@ export const DestinationDetails = () => {
                       >
                         Ver detalles
                       </a>
-                    </div>
-                  </div>
-                </motion.div>
+            </div>
+          </div>
+        </motion.div>
               ))}
           </div>
         </div>

@@ -1,81 +1,197 @@
-import { createContext, useContext, useState, ReactNode } from 'react';
-import { mockUsers } from '../data/mockData';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { getCurrentUser, signIn, signOut, signUp, resetPassword, updatePassword, AuthUser, UserCredentials, SignUpData } from '../services/auth';
 
 interface AuthContextType {
-  currentUser: any | null;
-  signIn: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, password: string) => Promise<void>;
-  signInWithGoogle: () => Promise<void>;
+  user: AuthUser | null;
+  loading: boolean;
+  error: string | null;
+  isAuthenticated: boolean;
+  login: (credentials: UserCredentials) => Promise<{ success: boolean; error?: string }>;
+  register: (data: SignUpData) => Promise<{ success: boolean; error?: string }>;
   logout: () => Promise<void>;
+  forgotPassword: (email: string) => Promise<{ success: boolean; error?: string }>;
+  changePassword: (password: string) => Promise<{ success: boolean; error?: string }>;
+  clearError: () => void;
 }
 
-const AuthContext = createContext<AuthContextType | null>(null);
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth debe ser usado dentro de un AuthProvider');
-  }
-  return context;
-};
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [user, setUser] = useState<AuthUser | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [currentUser, setCurrentUser] = useState<any | null>(null);
-
-  const signIn = async (email: string, password: string) => {
-    // Simular delay de red
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    // Simular validación de credenciales
-    const user = mockUsers.find(u => u.email === email);
-    if (!user) {
-      throw new Error('Usuario no encontrado');
-    }
-
-    setCurrentUser(user);
-  };
-
-  const signUp = async (email: string, password: string) => {
-    // Simular delay de red
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    // Simular creación de usuario
-    const newUser = {
-      id: (mockUsers.length + 1).toString(),
-      name: email.split('@')[0],
-      email,
-      avatar: `https://ui-avatars.com/api/?name=${email.split('@')[0]}`,
+  // Verificar si hay un usuario autenticado al cargar
+  useEffect(() => {
+    const checkUser = async () => {
+      try {
+        setLoading(true);
+        const { user, error } = await getCurrentUser();
+        
+        if (error) {
+          console.error('Error al obtener usuario:', error.message);
+        }
+        
+        setUser(user);
+      } catch (err) {
+        console.error('Error inesperado:', err);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    setCurrentUser(newUser);
+    checkUser();
+  }, []);
+
+  const login = async (credentials: UserCredentials): Promise<{ success: boolean; error?: string }> => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const { user: authUser, error: signInError } = await signIn(credentials);
+      
+      if (signInError) {
+        setError(signInError.message);
+        return { success: false, error: signInError.message };
+      }
+      
+      if (!authUser) {
+        const errorMsg = 'No se pudo iniciar sesión';
+        setError(errorMsg);
+        return { success: false, error: errorMsg };
+      }
+      
+      setUser(authUser);
+      return { success: true };
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : 'Error al iniciar sesión';
+      setError(errorMsg);
+      return { success: false, error: errorMsg };
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const signInWithGoogle = async () => {
-    // Simular delay de red
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    // Simular inicio de sesión con Google
-    const mockGoogleUser = mockUsers[0];
-    setCurrentUser(mockGoogleUser);
+  const register = async (data: SignUpData): Promise<{ success: boolean; error?: string }> => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const { user: authUser, error: signUpError } = await signUp(data);
+      
+      if (signUpError) {
+        setError(signUpError.message);
+        return { success: false, error: signUpError.message };
+      }
+      
+      if (!authUser) {
+        const errorMsg = 'No se pudo registrar el usuario';
+        setError(errorMsg);
+        return { success: false, error: errorMsg };
+      }
+      
+      setUser(authUser);
+      return { success: true };
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : 'Error al registrar usuario';
+      setError(errorMsg);
+      return { success: false, error: errorMsg };
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const logout = async () => {
-    // Simular delay de red
-    await new Promise(resolve => setTimeout(resolve, 500));
-    setCurrentUser(null);
+  const logout = async (): Promise<void> => {
+    setLoading(true);
+    
+    try {
+      const { error: signOutError } = await signOut();
+      
+      if (signOutError) {
+        setError(signOutError.message);
+        console.error('Error al cerrar sesión:', signOutError.message);
+      }
+      
+      setUser(null);
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : 'Error al cerrar sesión';
+      setError(errorMsg);
+      console.error('Error inesperado al cerrar sesión:', errorMsg);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  return (
-    <AuthContext.Provider
-      value={{
-        currentUser,
-        signIn,
-        signUp,
-        signInWithGoogle,
-        logout,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+  const forgotPassword = async (email: string): Promise<{ success: boolean; error?: string }> => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const { error: resetError } = await resetPassword(email);
+      
+      if (resetError) {
+        setError(resetError.message);
+        return { success: false, error: resetError.message };
+      }
+      
+      return { success: true };
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : 'Error al solicitar reset de contraseña';
+      setError(errorMsg);
+      return { success: false, error: errorMsg };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const changePassword = async (password: string): Promise<{ success: boolean; error?: string }> => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      const { error: updateError } = await updatePassword(password);
+      
+      if (updateError) {
+        setError(updateError.message);
+        return { success: false, error: updateError.message };
+      }
+      
+      return { success: true };
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : 'Error al actualizar contraseña';
+      setError(errorMsg);
+      return { success: false, error: errorMsg };
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const clearError = () => {
+    setError(null);
+  };
+
+  const value: AuthContextType = {
+    user,
+    loading,
+    error,
+    isAuthenticated: !!user,
+    login,
+    register,
+    logout,
+    forgotPassword,
+    changePassword,
+    clearError,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};
+
+export const useAuth = (): AuthContextType => {
+  const context = useContext(AuthContext);
+  
+  if (context === undefined) {
+    throw new Error('useAuth debe ser usado dentro de un AuthProvider');
+  }
+  
+  return context;
 }; 

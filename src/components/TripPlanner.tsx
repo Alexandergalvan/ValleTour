@@ -2,9 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { PDFDownloadLink, pdf } from '@react-pdf/renderer';
 import TripPDF from '../components/TripPDF';
 import { motion, AnimatePresence } from 'framer-motion';
-
-// Constante con la URL base del servidor - usar la variable de entorno o un valor por defecto
-const SERVER_URL = "https://valletour-api.vercel.app"
+import { uploadPDF, getPublicURL } from '../services/supabase';
 
 interface Step {
   id: number;
@@ -126,7 +124,7 @@ const TripPlanner = () => {
     });
   };
 
-  // Función para generar el PDF y enviarlo al servidor
+  // Función para generar el PDF y subirlo a Supabase
   const generatePDF = useCallback(async () => {
     setQrLoading(true);
     setUploadError(null);
@@ -139,37 +137,26 @@ const TripPlanner = () => {
       // Generar el Blob
       const blob = await pdf(pdfDocument).toBlob();
       
-      // Crear un objeto File a partir del Blob
-      const fileName = `plan-viaje-oaxaca-${new Date().toISOString().split('T')[0]}.pdf`;
-      const pdfFile = new File([blob], fileName, { 
-        type: 'application/pdf' 
-      });
+      // Nombre del archivo para Supabase
+      const fileName = `plan-viaje-oaxaca-${new Date().toISOString().split('T')[0]}-${Math.random().toString(36).substring(2, 8)}.pdf`;
       
-      // Crear un FormData para enviar el archivo
-      const formData = new FormData();
-      formData.append('pdf', pdfFile);
+      // Subir PDF a Supabase Storage
+      const { data, error } = await uploadPDF(blob, fileName);
       
-      // Enviar el archivo al servidor
-      const response = await fetch(`${SERVER_URL}/api/upload-pdf`, {
-        method: 'POST',
-        body: formData
-      });
-      
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Error al subir el PDF al servidor');
+      if (error) {
+        throw new Error(error.message || 'Error al subir el PDF a Supabase');
       }
       
-      const data = await response.json();
+      // Obtener URL pública del PDF
+      const path = data?.path || `public/${fileName}`;
+      const publicUrl = getPublicURL(path);
       
       // Guardar la URL del blob para la descarga local (respaldo)
       const blobUrl = URL.createObjectURL(blob);
       setPdfBlob(blobUrl);
       
-      // Establecer la URL compartible para el código QR
-      // Esta URL apunta a la página de descarga en el servidor
-      const shareableUrl = `${SERVER_URL}/descargar-plan?id=${data.id}`;
-      setQrData(shareableUrl);
+      // Establecer la URL directa del PDF para el código QR
+      setQrData(publicUrl);
       
       setQrLoading(false);
     } catch (error) {

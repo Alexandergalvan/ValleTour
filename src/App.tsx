@@ -8,6 +8,8 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
 import Destinations from './pages/Destinations';
 import Services from './pages/Services';
 import Blog from './pages/Blog';
@@ -18,10 +20,8 @@ import TripPlannerPage from './pages/TripPlannerPage';
 import PresentationMode from './components/PresentationMode';
 import PageTransition from './components/PageTransition';
 import { usePresentationMode } from './context/PresentationContext';
-
-// Importación de páginas (se crearán después)
-const Profile = () => <div>Página de Perfil</div>;
-const MyTrips = () => <div>Mis Viajes</div>;
+import Profile from './pages/Profile';
+import MyTrips from './pages/MyTrips';
 
 // Componente interno para manejar las animaciones de ruta
 const AnimatedRoutes = () => {
@@ -75,6 +75,16 @@ const AnimatedRoutes = () => {
           <Route path="/registro" element={
             <PageTransition presentationMode={presentationMode}>
               <Register />
+            </PageTransition>
+          } />
+          <Route path="/recuperar-password" element={
+            <PageTransition presentationMode={presentationMode}>
+              <ForgotPassword />
+            </PageTransition>
+          } />
+          <Route path="/reset-password" element={
+            <PageTransition presentationMode={presentationMode}>
+              <ResetPassword />
             </PageTransition>
           } />
           <Route path="/perfil" element={

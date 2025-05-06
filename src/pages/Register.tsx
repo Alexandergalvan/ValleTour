@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
+import { SignUpData } from '../services/auth';
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -11,10 +12,9 @@ export default function Register() {
     name: '',
     phone: '',
   });
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [passwordError, setPasswordError] = useState('');
   const navigate = useNavigate();
-  const { register } = useAuth();
+  const { register, error, loading, clearError } = useAuth();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -22,24 +22,30 @@ export default function Register() {
       ...prev,
       [name]: value,
     }));
+    if (error) clearError();
+    if (passwordError) setPasswordError('');
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
-      return setError('Las contraseñas no coinciden');
+      setPasswordError('Las contraseñas no coinciden');
+      return;
     }
 
-    try {
-      setError('');
-      setLoading(true);
-      await register(formData.email, formData.password);
+    // Creamos un objeto con los datos necesarios para el registro
+    const signUpData: SignUpData = {
+      email: formData.email,
+      password: formData.password,
+      name: formData.name
+    };
+
+    // Intentamos registrar al usuario
+    const result = await register(signUpData);
+    
+    if (result.success) {
       navigate('/');
-    } catch (err) {
-      setError('Error al crear la cuenta. Por favor, intenta nuevamente.');
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -70,13 +76,13 @@ export default function Register() {
           </p>
         </div>
 
-        {error && (
+        {(error || passwordError) && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             className="rounded-md bg-red-50 p-4 dark:bg-red-900/30"
           >
-            <p className="text-sm text-red-600 dark:text-red-200">{error}</p>
+            <p className="text-sm text-red-600 dark:text-red-200">{error || passwordError}</p>
           </motion.div>
         )}
 

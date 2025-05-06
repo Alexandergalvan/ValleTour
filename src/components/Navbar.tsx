@@ -1,14 +1,18 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import PresentationControls from './PresentationControls';
 import { usePresentationMode } from '../context/PresentationContext';
+import { useAuth } from '../context/AuthContext';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [showPresentationControls, setShowPresentationControls] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
   const { presentationMode } = usePresentationMode();
+  const { user, isAuthenticated, logout } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
 
   // Función para verificar si la ruta actual coincide con el enlace
   const isActive = (path: string) => {
@@ -22,6 +26,12 @@ export default function Navbar() {
       return true;
     }
     return false;
+  };
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/');
+    setShowUserMenu(false);
   };
 
   // Estilos para enlaces activos e inactivos
@@ -80,7 +90,7 @@ export default function Navbar() {
             </Link>
           </div>
           <div className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-4">
-            <div className="relative">
+            {/* <div className="relative">
               <button
                 onClick={() => setShowPresentationControls(!showPresentationControls)}
                 className={`rounded-md px-3 py-1.5 text-sm font-medium flex items-center gap-1 ${
@@ -107,20 +117,76 @@ export default function Navbar() {
                   <PresentationControls className="shadow-lg rounded-md overflow-hidden" />
                 </div>
               )}
-            </div>
+            </div> */}
             
-            <Link
-              to="/login"
-              className={`rounded-md px-4 py-2 text-sm font-semibold shadow-sm ${isActive('/login') ? 'bg-secondary-dark text-white' : 'bg-secondary text-white hover:bg-secondary-dark'}`}
-            >
-              Iniciar Sesión
-            </Link>
-            <Link
-              to="/registro"
-              className={`rounded-md px-4 py-2 text-sm font-semibold shadow-sm ${isActive('/registro') ? 'bg-accent-dark text-white' : 'bg-accent text-white hover:bg-accent-dark'}`}
-            >
-              Registrarse
-            </Link>
+            {isAuthenticated ? (
+              // Menú de usuario
+              <div className="relative">
+                <button
+                  onClick={() => setShowUserMenu(!showUserMenu)}
+                  className="flex items-center text-sm font-medium text-primary-light rounded-full focus:outline-none focus:ring-2 focus:ring-secondary dark:text-gray-300"
+                >
+                  <span className="sr-only">Abrir menú de usuario</span>
+                  <div className="flex items-center gap-2">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-secondary text-white">
+                      {user?.name ? user.name.charAt(0).toUpperCase() : user?.email.charAt(0).toUpperCase()}
+                    </div>
+                    <span>{user?.name || user?.email}</span>
+                    <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                </button>
+                
+                {showUserMenu && (
+                  <div className="absolute right-0 mt-2 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-primary-light z-50">
+                    <Link
+                      to="/perfil"
+                      className="block px-4 py-2 text-sm text-primary-light hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-primary"
+                      onClick={() => setShowUserMenu(false)}
+                    >
+                      Mi Perfil
+                    </Link>
+                    <Link
+                      to="/mis-viajes"
+                      className="block px-4 py-2 text-sm text-primary-light hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-primary"
+                      onClick={() => setShowUserMenu(false)}
+                    >
+                      Mis Viajes
+                    </Link>
+                    <Link
+                      to="/planificador"
+                      className="block px-4 py-2 text-sm text-primary-light hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-primary"
+                      onClick={() => setShowUserMenu(false)}
+                    >
+                      Planificar Viaje
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-primary"
+                    >
+                      Cerrar Sesión
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              // Botones de login/registro
+              <>
+                <Link
+                  to="/login"
+                  className={`rounded-md px-4 py-2 text-sm font-semibold shadow-sm ${isActive('/login') ? 'bg-secondary-dark text-white' : 'bg-secondary text-white hover:bg-secondary-dark'}`}
+                >
+                  Iniciar Sesión
+                </Link>
+                <Link
+                  to="/registro"
+                  className={`rounded-md px-4 py-2 text-sm font-semibold shadow-sm ${isActive('/registro') ? 'bg-accent-dark text-white' : 'bg-accent text-white hover:bg-accent-dark'}`}
+                >
+                  Registrarse
+                </Link>
+              </>
+            )}
           </div>
           <div className="-mr-2 flex items-center sm:hidden">
             <button
@@ -221,20 +287,65 @@ export default function Navbar() {
               <PresentationControls />
             </div>
             
-            <Link
-              to="/login"
-              className={`block rounded-md px-3 py-2 text-center text-base font-medium text-white ${isActive('/login') ? 'bg-secondary-dark' : 'bg-secondary hover:bg-secondary-dark'}`}
-              onClick={() => setIsOpen(false)}
-            >
-              Iniciar Sesión
-            </Link>
-            <Link
-              to="/registro"
-              className={`block rounded-md px-3 py-2 text-center text-base font-medium text-white ${isActive('/registro') ? 'bg-accent-dark' : 'bg-accent hover:bg-accent-dark'}`}
-              onClick={() => setIsOpen(false)}
-            >
-              Registrarse
-            </Link>
+            {isAuthenticated ? (
+              // Menú de usuario móvil
+              <div className="space-y-2">
+                <div className="flex items-center px-4 py-2">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-secondary text-white">
+                    {user?.name ? user.name.charAt(0).toUpperCase() : user?.email.charAt(0).toUpperCase()}
+                  </div>
+                  <div className="ml-3">
+                    <div className="text-base font-medium text-primary-dark dark:text-white">{user?.name || "Usuario"}</div>
+                    <div className="text-sm text-primary-light dark:text-gray-300">{user?.email}</div>
+                  </div>
+                </div>
+                <Link
+                  to="/perfil"
+                  className="block rounded-md px-3 py-2 text-base font-medium text-primary-light hover:bg-gray-100 hover:text-secondary dark:text-gray-300 dark:hover:bg-primary-light"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Mi Perfil
+                </Link>
+                <Link
+                  to="/mis-viajes"
+                  className="block rounded-md px-3 py-2 text-base font-medium text-primary-light hover:bg-gray-100 hover:text-secondary dark:text-gray-300 dark:hover:bg-primary-light"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Mis Viajes
+                </Link>
+                <Link
+                  to="/planificador"
+                  className="block rounded-md px-3 py-2 text-base font-medium text-primary-light hover:bg-gray-100 hover:text-secondary dark:text-gray-300 dark:hover:bg-primary-light"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Planificar Viaje
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="block w-full text-left rounded-md px-3 py-2 text-base font-medium text-red-600 hover:bg-gray-100 dark:hover:bg-primary-light"
+                >
+                  Cerrar Sesión
+                </button>
+              </div>
+            ) : (
+              // Botones de login/registro móvil
+              <>
+                <Link
+                  to="/login"
+                  className={`block rounded-md px-3 py-2 text-center text-base font-medium text-white ${isActive('/login') ? 'bg-secondary-dark' : 'bg-secondary hover:bg-secondary-dark'}`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  Iniciar Sesión
+                </Link>
+                <Link
+                  to="/registro"
+                  className={`block rounded-md px-3 py-2 text-center text-base font-medium text-white ${isActive('/registro') ? 'bg-accent-dark' : 'bg-accent hover:bg-accent-dark'}`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  Registrarse
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </motion.div>
