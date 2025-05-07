@@ -741,7 +741,7 @@ const TripPDF = ({ preferences }: TripPDFProps) => {
       <Page size="A4" style={styles.page} wrap>
         <View style={styles.header}>
           <Image 
-            src="/logo.webp" 
+            src="/logo.png" 
             style={styles.logo}
             cache={false}
           />
