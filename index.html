@@ -1,13 +1,93 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
+    <!-- Meta etiquetas básicas -->
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/footer.webp" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ValleTour</title>
+    <title>ValleTour - Planifica tu viaje perfecto a Oaxaca</title>
+    <meta name="description" content="Crea planes de viaje personalizados a Oaxaca. Genera PDF descargables y comparte tus itinerarios mediante códigos QR. Descubre experiencias auténticas adaptadas a tus preferencias." />
+    <meta name="keywords" content="Oaxaca, viaje, planificador, itinerario, turismo, México, planificación de viajes, experiencias, pdf, código qr" />
+    <meta name="author" content="ValleTour" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="Spanish" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://valletour.website/" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/webp" href="/footer.webp" />
+    <link rel="apple-touch-icon" href="/logo.webp" />
+    
+    <!-- Manifest para PWA -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://valletour.website/" />
+    <meta property="og:title" content="ValleTour - Planifica tu viaje perfecto a Oaxaca" />
+    <meta property="og:description" content="Crea planes de viaje personalizados a Oaxaca. Genera PDF descargables y comparte tus itinerarios mediante códigos QR." />
+    <meta property="og:image" content="https://valletour.website/hero.webp" />
+    <meta property="og:image:alt" content="ValleTour - Experiencias de viaje en Oaxaca" />
+    <meta property="og:site_name" content="ValleTour" />
+    <meta property="og:locale" content="es_MX" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://valletour.website/" />
+    <meta name="twitter:title" content="ValleTour - Planifica tu viaje perfecto a Oaxaca" />
+    <meta name="twitter:description" content="Crea planes de viaje personalizados a Oaxaca. Genera PDF descargables y comparte tus itinerarios mediante códigos QR." />
+    <meta name="twitter:image" content="https://valletour.website/hero.webp" />
+    <meta name="twitter:image:alt" content="ValleTour - Experiencias de viaje en Oaxaca" />
+    
+    <!-- Etiquetas para dispositivos móviles -->
+    <meta name="theme-color" content="#4338ca" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="format-detection" content="telephone=no" />
+    
+    <!-- Preconectar a recursos externos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://api.qrserver.com" crossorigin />
+    
+    <!-- Información estructurada / Schema.org -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "TravelAgency",
+        "name": "ValleTour",
+        "url": "https://valletour.website/",
+        "logo": "https://valletour.website/logo.webp",
+        "description": "Planificador de viajes personalizados a Oaxaca con generación de PDF y códigos QR.",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Oaxaca",
+          "addressRegion": "OAX",
+          "addressCountry": "MX"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+52-951-123-4567",
+          "contactType": "customer service"
+        },
+        "sameAs": [
+          "https://facebook.com/valletour",
+          "https://instagram.com/valletour",
+          "https://twitter.com/valletour"
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Noscript para usuarios sin JavaScript habilitado -->
+    <noscript>
+      <div style="text-align: center; padding: 20px; font-family: sans-serif;">
+        <h2>Se requiere JavaScript para utilizar ValleTour</h2>
+        <p>Por favor, habilita JavaScript en tu navegador para disfrutar de la experiencia completa.</p>
+      </div>
+    </noscript>
   </body>
-</html>
+</html> 

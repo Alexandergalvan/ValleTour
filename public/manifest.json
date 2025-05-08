@@ -1,0 +1,47 @@
+{
+  "name": "ValleTour - Planificador de Viajes a Oaxaca",
+  "short_name": "ValleTour",
+  "description": "Planifica tu viaje perfecto a Oaxaca con itinerarios personalizados, PDFs descargables y códigos QR para compartir.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4338ca",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/logo.webp",
+      "sizes": "192x192",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo-alt.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Planificador",
+      "url": "/planificador",
+      "description": "Crea un plan de viaje personalizado"
+    },
+    {
+      "name": "Destinos",
+      "url": "/destinos",
+      "description": "Explora destinos en Oaxaca"
+    }
+  ],
+  "lang": "es-MX",
+  "categories": ["travel", "lifestyle", "tourism"],
+  "screenshots": [
+    {
+      "src": "/hero.webp",
+      "sizes": "1280x720",
+      "type": "image/webp",
+      "platform": "wide",
+      "label": "Pantalla de inicio de ValleTour"
+    }
+  ]
+} 

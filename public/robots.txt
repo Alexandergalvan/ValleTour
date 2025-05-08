@@ -1,0 +1,10 @@
+# robots.txt para ValleTour
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://valletour.website/sitemap.xml
+
+# Rutas específicas
+Disallow: /api/
+Disallow: /admin/ 
