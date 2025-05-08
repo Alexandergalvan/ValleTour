@@ -321,10 +321,10 @@ export const DestinationDetails = () => {
       <div className="sticky top-0 z-30 bg-white shadow-md">
         <div className="container mx-auto">
           <div className="flex space-x-6 overflow-x-auto p-4 font-medium text-gray-600 lg:px-0">
-            <a href="#descripcion" className="whitespace-nowrap hover:text-secondary">Descripción</a>
-            <a href="#itinerario" className="whitespace-nowrap hover:text-secondary">Itinerario</a>
-            <a href="#servicios" className="whitespace-nowrap hover:text-secondary">Servicios incluidos</a>
-            <a href="#informacion" className="whitespace-nowrap hover:text-secondary">Información importante</a>
+            <a href="#descripcion" className="whitespace-nowrap text-gray-700">Descripción</a>
+            <a href="#itinerario" className="whitespace-nowrap text-gray-700">Itinerario</a>
+            <a href="#servicios" className="whitespace-nowrap text-gray-700">Servicios incluidos</a>
+            <a href="#informacion" className="whitespace-nowrap text-gray-700">Información importante</a>
           </div>
             </div>
           </div>
@@ -398,7 +398,7 @@ export const DestinationDetails = () => {
                         {activities.map((activity, activityIndex) => (
                           <div key={activityIndex} className="relative">
                             <div className="absolute left-[-9px] top-1.5 size-3 rounded-full bg-secondary"></div>
-                            <p className="text-gray-700">{activity}</p>
+                            <p className="text-gray-700 pl-4">{activity}</p>
                           </div>
                         ))}
                       </div>
