@@ -34,19 +34,30 @@ export default function Register() {
       return;
     }
 
+    if (formData.password.length < 6) {
+      setPasswordError('La contraseña debe tener al menos 6 caracteres');
+      return;
+    }
+
     // Creamos un objeto con los datos necesarios para el registro
     const signUpData: SignUpData = {
       email: formData.email,
       password: formData.password,
-      name: formData.name
+      name: formData.name,
+      phone: formData.phone
     };
 
     // Intentamos registrar al usuario
     const result = await register(signUpData);
-    
+
     if (result.success) {
       navigate('/');
     }
+  };
+
+  const handleSocialRegister = async (provider: 'google' | 'facebook') => {
+    // TODO: Implementar registro con redes sociales
+    console.log(`Registrarse con ${provider}`);
   };
 
   return (
@@ -86,7 +97,7 @@ export default function Register() {
           </motion.div>
         )}
 
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-4">
             <div className="input-group">
               <label htmlFor="name" className="input-label">
@@ -205,7 +216,7 @@ export default function Register() {
           </div>
         </form>
 
-        <div className="mt-6">
+        <div>
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-300 dark:border-gray-600"></div>
@@ -220,6 +231,7 @@ export default function Register() {
           <div className="mt-6 grid grid-cols-2 gap-3">
             <button
               type="button"
+              onClick={() => handleSocialRegister('google')}
               className="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-primary-light hover:bg-gray-50 dark:border-gray-600 dark:bg-primary-light dark:text-gray-300 dark:hover:bg-primary"
             >
               <svg className="size-5" fill="currentColor" viewBox="0 0 24 24">
@@ -230,6 +242,7 @@ export default function Register() {
 
             <button
               type="button"
+              onClick={() => handleSocialRegister('facebook')}
               className="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-primary-light hover:bg-gray-50 dark:border-gray-600 dark:bg-primary-light dark:text-gray-300 dark:hover:bg-primary"
             >
               <svg className="size-5" fill="currentColor" viewBox="0 0 24 24">

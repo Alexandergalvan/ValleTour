@@ -20,12 +20,17 @@ export default function Login() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const result = await login(credentials);
-    
+
     if (result.success) {
       navigate('/');
     }
+  };
+
+  const handleSocialLogin = async (provider: 'google' | 'facebook') => {
+    // TODO: Implementar inicio de sesión con redes sociales
+    console.log(`Iniciar sesión con ${provider}`);
   };
 
   return (
@@ -65,7 +70,7 @@ export default function Login() {
           </motion.div>
         )}
 
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-4">
             <div className="input-group">
               <label htmlFor="email" className="input-label">
@@ -161,7 +166,7 @@ export default function Login() {
           </div>
         </form>
 
-        <div className="mt-6">
+        <div>
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-300 dark:border-gray-600"></div>
@@ -176,6 +181,7 @@ export default function Login() {
           <div className="mt-6 grid grid-cols-2 gap-3">
             <button
               type="button"
+              onClick={() => handleSocialLogin('google')}
               className="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-primary-light hover:bg-gray-50 dark:border-gray-600 dark:bg-primary-light dark:text-gray-300 dark:hover:bg-primary"
             >
               <svg className="size-5" fill="currentColor" viewBox="0 0 24 24">
@@ -186,6 +192,7 @@ export default function Login() {
 
             <button
               type="button"
+              onClick={() => handleSocialLogin('facebook')}
               className="flex w-full items-center justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-primary-light hover:bg-gray-50 dark:border-gray-600 dark:bg-primary-light dark:text-gray-300 dark:hover:bg-primary"
             >
               <svg className="size-5" fill="currentColor" viewBox="0 0 24 24">

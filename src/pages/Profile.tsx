@@ -1,26 +1,30 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
-import { updateProfile } from '../services/auth';
+import { updateProfile, deleteAccount } from '../services/auth';
 
 export default function Profile() {
-  const { user, loading } = useAuth();
+  const { user, loading, logout } = useAuth();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    avatar_url: ''
+    avatar_url: '',
+    phone: ''
   });
   const [updating, setUpdating] = useState(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
 
   useEffect(() => {
     if (user) {
       setFormData({
         name: user.name || '',
         email: user.email || '',
-        avatar_url: user.avatar_url || ''
+        avatar_url: user.avatar_url || '',
+        phone: user.phone || ''
       });
     }
   }, [user]);
@@ -41,7 +45,8 @@ export default function Profile() {
     try {
       const { error: updateError } = await updateProfile({
         name: formData.name,
-        avatar_url: formData.avatar_url
+        avatar_url: formData.avatar_url,
+        phone: formData.phone
       });
 
       if (updateError) {
@@ -53,6 +58,23 @@ export default function Profile() {
       setError(err instanceof Error ? err.message : 'Error al actualizar perfil');
     } finally {
       setUpdating(false);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    if (!showDeleteConfirm) {
+      setShowDeleteConfirm(true);
+      return;
+    }
+
+    try {
+      const { error } = await deleteAccount();
+      if (error) throw error;
+      await logout();
+      navigate('/');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Error al eliminar la cuenta');
+      setShowDeleteConfirm(false);
     }
   };
 
@@ -147,6 +169,21 @@ export default function Profile() {
                 </p>
               </div>
 
+              <div className="input-group">
+                <label htmlFor="phone" className="input-label">
+                  Teléfono
+                </label>
+                <input
+                  id="phone"
+                  name="phone"
+                  type="tel"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  className="input-primary"
+                  placeholder="+52 123 456 7890"
+                />
+              </div>
+
               <div className="input-group col-span-1 md:col-span-2">
                 <label htmlFor="avatar_url" className="input-label">
                   URL de imagen de perfil (opcional)
@@ -160,6 +197,18 @@ export default function Profile() {
                   className="input-primary"
                   placeholder="https://ejemplo.com/imagen.jpg"
                 />
+                {formData.avatar_url && (
+                  <div className="mt-2">
+                    <img
+                      src={formData.avatar_url}
+                      alt="Avatar preview"
+                      className="h-20 w-20 rounded-full object-cover"
+                      onError={(e) => {
+                        e.currentTarget.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(formData.name || formData.email)}&background=random`;
+                      }}
+                    />
+                  </div>
+                )}
               </div>
             </div>
 
@@ -197,9 +246,9 @@ export default function Profile() {
             </div>
           </form>
 
-          <div className="mt-12 border-t border-gray-200 pt-8 dark:border-gray-700">
+          <div className="mt-8">
             <h2 className="text-xl font-semibold text-primary dark:text-white">Configuración de la cuenta</h2>
-            
+
             <div className="mt-6 space-y-4">
               <div className="rounded-md border border-gray-200 p-4 dark:border-gray-700">
                 <h3 className="text-lg font-medium text-primary dark:text-white">Cambiar contraseña</h3>
@@ -212,16 +261,29 @@ export default function Profile() {
                   </Link>
                 </div>
               </div>
-              
+
               <div className="rounded-md border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-900/30">
                 <h3 className="text-lg font-medium text-red-800 dark:text-red-200">Eliminar cuenta</h3>
                 <p className="mt-1 text-sm text-red-700 dark:text-red-300">
-                  Esta acción no se puede deshacer. Se eliminarán permanentemente todos tus datos.
+                  {showDeleteConfirm
+                    ? '¿Estás seguro de que quieres eliminar tu cuenta? Esta acción no se puede deshacer.'
+                    : 'Esta acción no se puede deshacer. Se eliminarán permanentemente todos tus datos.'}
                 </p>
-                <div className="mt-4">
-                  <button className="rounded-md border border-red-600 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-100 dark:border-red-500 dark:text-red-500 dark:hover:bg-red-950">
-                    Eliminar mi cuenta
+                <div className="mt-4 flex gap-4">
+                  <button
+                    onClick={handleDeleteAccount}
+                    className="rounded-md border border-red-600 px-4 py-2 text-sm font-medium text-red-600 hover:bg-red-100 dark:border-red-500 dark:text-red-500 dark:hover:bg-red-950"
+                  >
+                    {showDeleteConfirm ? 'Confirmar eliminación' : 'Eliminar mi cuenta'}
                   </button>
+                  {showDeleteConfirm && (
+                    <button
+                      onClick={() => setShowDeleteConfirm(false)}
+                      className="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700"
+                    >
+                      Cancelar
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

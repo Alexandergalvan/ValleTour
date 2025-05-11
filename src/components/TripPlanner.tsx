@@ -7,9 +7,11 @@ import { uploadPDF, getPublicURL } from '../services/supabase';
 interface Step {
   id: number;
   title: string;
+  icon: string;
 }
 
 interface TripPreferences {
+  destination: string;
   duration: number;
   startDate: string;
   budget: string;
@@ -24,19 +26,107 @@ interface TripPreferences {
   languages: string[];
 }
 
+const destinations = [
+  {
+    id: "monte-alban",
+    title: 'Monte Albán',
+    description: 'Antigua ciudad zapoteca declarada Patrimonio de la Humanidad por la UNESCO.',
+    image: '/destinos/monte.webp',
+    category: 'Arqueología',
+    price: '899',
+    features: [
+      'Vistas panorámicas del Valle de Oaxaca',
+      'Juego de Pelota',
+      'Observatorio astronómico',
+      'Galería de los Danzantes'
+    ]
+  },
+  {
+    id: "hierve-el-agua",
+    title: 'Hierve el Agua',
+    description: 'Formaciones rocosas naturales que simulan cascadas petrificadas.',
+    image: '/destinos/agua.webp',
+    category: 'Naturaleza',
+    price: '699',
+    features: [
+      'Piscinas naturales',
+      'Miradores espectaculares',
+      'Área para camping',
+      'Guías locales'
+    ]
+  },
+  {
+    id: "mitla",
+    title: 'Mitla',
+    description: 'Ciudad zapoteca conocida por sus elaborados mosaicos geométricos.',
+    image: '/destinos/mitla.webp',
+    category: 'Arqueología',
+    price: '799',
+    features: [
+      'Palacio de las Columnas',
+      'Patrones geométricos únicos',
+      'Centro ceremonial',
+      'Museo del sitio'
+    ]
+  },
+  {
+    id: "centro-historico",
+    title: 'Centro Histórico de Oaxaca',
+    description: 'Ciudad colonial con arquitectura barroca y tradiciones vivas.',
+    image: '/destinos/centro.webp',
+    category: 'Cultura',
+    price: '599',
+    features: [
+      'Catedral de Oaxaca',
+      'Templo de Santo Domingo',
+      'Mercado 20 de Noviembre',
+      'Zócalo'
+    ]
+  },
+  {
+    id: "pueblos-mancomunados",
+    title: 'Pueblos Mancomunados',
+    description: 'Red de comunidades indígenas en la Sierra Norte de Oaxaca.',
+    image: '/destinos/pueblos.webp',
+    category: 'Ecoturismo',
+    price: '999',
+    features: [
+      'Senderismo',
+      'Ciclismo de montaña',
+      'Cabañas ecológicas',
+      'Gastronomía local'
+    ]
+  },
+  {
+    id: "bahias-huatulco",
+    title: 'Bahías de Huatulco',
+    description: 'Complejo turístico con playas vírgenes y arrecifes de coral.',
+    image: '/destinos/bahias.webp',
+    category: 'Playa',
+    price: '1299',
+    features: [
+      'Snorkeling',
+      'Paseos en lancha',
+      'Playas desiertas',
+      'Parque Nacional'
+    ]
+  }
+];
+
 const steps: Step[] = [
-  { id: 1, title: "Duración y Fecha" },
-  { id: 2, title: "Presupuesto" },
-  { id: 3, title: "Intereses" },
-  { id: 4, title: "Estilo de Viaje" },
-  { id: 5, title: "Alojamiento" },
-  { id: 6, title: "Transporte" },
-  { id: 7, title: "Tamaño del Grupo" },
-  { id: 8, title: "Preferencias Alimentarias" },
-  { id: 9, title: "Actividades" },
-  { id: 10, title: "Accesibilidad" },
-  { id: 11, title: "Idiomas" },
-  { id: 12, title: "Resumen" },
+  { id: 1, title: "Selecciona tu Destino", icon: "🗺️" },
+  { id: 2, title: "Duración y Fecha", icon: "📅" },
+  { id: 3, title: "Presupuesto", icon: "💰" },
+  { id: 4, title: "Intereses", icon: "🎯" },
+  { id: 5, title: "Estilo de Viaje", icon: "🎒" },
+  { id: 6, title: "Alojamiento", icon: "🏨" },
+  { id: 7, title: "Transporte", icon: "🚗" },
+  { id: 8, title: "Tamaño del Grupo", icon: "👥" },
+  { id: 9, title: "Preferencias Alimentarias", icon: "🍽️" },
+  { id: 10, title: "Actividades", icon: "🎨" },
+  { id: 11, title: "Accesibilidad", icon: "♿" },
+  { id: 12, title: "Idiomas", icon: "🌍" },
+  { id: 13, title: "Resumen", icon: "📋" },
 ];
 
 const durations = [1, 2, 3, 5, 7, 10, 14];
@@ -84,6 +174,7 @@ type ArrayFields = 'interests' | 'mealPreferences' | 'activities' | 'accessibili
 const TripPlanner = () => {
   const [step, setStep] = useState(1);
   const [preferences, setPreferences] = useState<TripPreferences>({
+    destination: '',
     duration: 3,
     startDate: '',
     budget: '',
@@ -104,6 +195,49 @@ const TripPlanner = () => {
   const [uploadError, setUploadError] = useState<string | null>(null);
   const pdfDocumentRef = useRef<React.ReactElement | null>(null);
 
+  // Animaciones para los botones de navegación
+  const buttonVariants = {
+    initial: { scale: 1 },
+    hover: { scale: 1.05 },
+    tap: { scale: 0.95 },
+    disabled: { scale: 1, opacity: 0.5 }
+  };
+
+  // Animaciones para las tarjetas de destino
+  const destinationCardVariants = {
+    initial: { opacity: 0, y: 20 },
+    animate: { opacity: 1, y: 0 },
+    hover: {
+      scale: 1.02,
+      boxShadow: "0 10px 30px rgba(0,0,0,0.1)",
+      transition: { duration: 0.2 }
+    },
+    tap: { scale: 0.98 }
+  };
+
+  // Animaciones para los pasos
+  const stepVariants = {
+    initial: { opacity: 0, x: 50 },
+    animate: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: -50 }
+  };
+
+  // Animaciones para el modal
+  const modalVariants = {
+    initial: { opacity: 0, scale: 0.8 },
+    animate: { opacity: 1, scale: 1 },
+    exit: { opacity: 0, scale: 0.8 }
+  };
+
+  // Animaciones para la barra de progreso
+  const progressBarVariants = {
+    initial: { width: 0 },
+    animate: {
+      width: `${(step / steps.length) * 100}%`,
+      transition: { duration: 0.5, ease: "easeInOut" }
+    }
+  };
+
   const nextStep = () => {
     setStep((prev) => Math.min(prev + 1, steps.length));
   };
@@ -116,7 +250,7 @@ const TripPlanner = () => {
     setPreferences((prev) => {
       const currentValues = prev[field];
       return {
-      ...prev,
+        ...prev,
         [field]: currentValues.includes(value)
           ? currentValues.filter((item) => item !== value)
           : [...currentValues, value],
@@ -124,40 +258,39 @@ const TripPlanner = () => {
     });
   };
 
-  // Función para generar el PDF y subirlo a Supabase
   const generatePDF = useCallback(async () => {
     setQrLoading(true);
     setUploadError(null);
-    
+
     try {
       // Crear el documento PDF
       const pdfDocument = <TripPDF preferences={preferences} />;
       pdfDocumentRef.current = pdfDocument;
-      
+
       // Generar el Blob
       const blob = await pdf(pdfDocument).toBlob();
-      
+
       // Nombre del archivo para Supabase
       const fileName = `plan-viaje-oaxaca-${new Date().toISOString().split('T')[0]}-${Math.random().toString(36).substring(2, 8)}.pdf`;
-      
+
       // Subir PDF a Supabase Storage
       const { data, error } = await uploadPDF(blob, fileName);
-      
+
       if (error) {
         throw new Error(error.message || 'Error al subir el PDF a Supabase');
       }
-      
+
       // Obtener URL pública del PDF
       const path = data?.path || `public/${fileName}`;
-      const publicUrl = getPublicURL(path);
-      
+      const publicUrl = await getPublicURL(path);
+
       // Guardar la URL del blob para la descarga local (respaldo)
       const blobUrl = URL.createObjectURL(blob);
       setPdfBlob(blobUrl);
-      
+
       // Establecer la URL directa del PDF para el código QR
-      setQrData(publicUrl);
-      
+      setQrData(publicUrl.data || '');
+
       setQrLoading(false);
     } catch (error) {
       console.error("Error al generar o subir el PDF:", error);
@@ -165,13 +298,13 @@ const TripPlanner = () => {
       setQrLoading(false);
     }
   }, [preferences]);
-  
+
   // Cuando se abre el modal, generamos el PDF y lo enviamos al servidor
   useEffect(() => {
     if (showQRModal) {
       generatePDF();
     }
-    
+
     // Limpieza al cerrar el modal
     return () => {
       if (!showQRModal && pdfBlob) {
@@ -193,6 +326,67 @@ const TripPlanner = () => {
             exit={{ opacity: 0, x: -20 }}
             className="space-y-6"
           >
+            <div className="mb-8 text-center">
+              <h3 className="mb-2 text-3xl font-bold text-primary">Selecciona tu Destino</h3>
+              <p className="text-gray-600">¿A dónde te gustaría viajar en Oaxaca?</p>
+            </div>
+
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {destinations.map((dest) => (
+                <motion.button
+                  key={dest.id}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => setPreferences({ ...preferences, destination: dest.id })}
+                  className={`relative overflow-hidden rounded-xl border-2 p-4 transition-all ${preferences.destination === dest.id
+                    ? 'border-primary bg-primary/5 shadow-lg'
+                    : 'border-gray-200 hover:border-primary/50'
+                    }`}
+                >
+                  <div className="relative mb-4 h-48">
+                    <img
+                      src={dest.image}
+                      alt={dest.title}
+                      className="size-full rounded-lg object-cover"
+                    />
+                    <div className="absolute inset-0 rounded-lg bg-gradient-to-t from-black/60 to-transparent" />
+                    <div className="absolute inset-x-0 bottom-0 p-4 text-white">
+                      <h4 className="text-xl font-bold text-white">{dest.title}</h4>
+                      <p className="text-sm text-white opacity-90">{dest.category}</p>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="text-sm text-gray-600">{dest.description}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-primary">${dest.price}</span>
+                      <span className="text-sm text-gray-500">{dest.features.length} actividades</span>
+                    </div>
+                  </div>
+                  {preferences.destination === dest.id && (
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="absolute right-2 top-2 rounded-full bg-primary p-1 text-white"
+                    >
+                      <svg className="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </motion.div>
+                  )}
+                </motion.button>
+              ))}
+            </div>
+          </motion.div>
+        );
+
+      case 2:
+        return (
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            className="space-y-6"
+          >
             <h3 className="text-2xl font-bold text-primary">Duración y Fecha</h3>
             <p className="text-gray-600">¿Cuántos días te gustaría quedarte en Oaxaca?</p>
             <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-7">
@@ -202,11 +396,10 @@ const TripPlanner = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setPreferences({ ...preferences, duration: d })}
-                  className={`rounded-xl border-2 p-3 transition-all ${
-                    preferences.duration === d
-                      ? 'border-primary bg-primary/10 shadow-md'
-                      : 'border-gray-200 hover:border-primary/50'
-                  }`}
+                  className={`rounded-xl border-2 p-3 transition-all ${preferences.duration === d
+                    ? 'border-primary bg-primary/10 shadow-md'
+                    : 'border-gray-200 hover:border-primary/50'
+                    }`}
                 >
                   <span className="block text-lg font-medium">{d}</span>
                   <span className="text-sm text-gray-500">día{d !== 1 ? 's' : ''}</span>
@@ -216,9 +409,9 @@ const TripPlanner = () => {
 
             <div className="mt-8">
               <p className="mb-3 text-gray-600">¿Cuándo planeas visitar?</p>
-                <input
-                  type="date"
-                  value={preferences.startDate}
+              <input
+                type="date"
+                value={preferences.startDate}
                 onChange={(e) => setPreferences({ ...preferences, startDate: e.target.value })}
                 className="w-full rounded-xl border-2 border-gray-200 p-3 outline-none transition focus:border-primary focus:ring focus:ring-primary/20"
                 min={new Date().toISOString().split('T')[0]}
@@ -227,7 +420,7 @@ const TripPlanner = () => {
           </motion.div>
         );
 
-      case 2:
+      case 3:
         return (
           <motion.div
             initial={{ opacity: 0, x: 20 }}
@@ -244,8 +437,7 @@ const TripPlanner = () => {
                   whileHover={{ scale: 1.01 }}
                   whileTap={{ scale: 0.99 }}
                   onClick={() => setPreferences({ ...preferences, budget: option.id })}
-                  className={`w-full rounded-xl border-2 p-4 transition-all ${
-                    preferences.budget === option.id
+                  className={`w-full rounded-xl border-2 p-4 transition-all ${preferences.budget === option.id
                     ? 'border-primary bg-primary/5 shadow-lg'
                     : 'border-gray-200 hover:border-primary/50 hover:bg-gray-50'
                     }`}
@@ -253,8 +445,8 @@ const TripPlanner = () => {
                   <div className="flex items-center">
                     {preferences.budget === option.id ? (
                       <svg className="size-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
                     ) : (
                       <div className="size-6" />
                     )}
@@ -266,7 +458,7 @@ const TripPlanner = () => {
           </motion.div>
         );
 
-      case 3:
+      case 4:
         return (
           <motion.div
             initial={{ opacity: 0, x: 20 }}
@@ -310,7 +502,7 @@ const TripPlanner = () => {
           </motion.div>
         );
 
-      case 4:
+      case 5:
         return (
           <motion.div
             initial={{ opacity: 0, x: 20 }}
@@ -338,7 +530,7 @@ const TripPlanner = () => {
           </motion.div>
         );
 
-      case 5:
+      case 6:
         return (
           <motion.div
             initial={{ opacity: 0, x: 20 }}
@@ -366,7 +558,7 @@ const TripPlanner = () => {
           </motion.div>
         );
 
-      case 6:
+      case 7:
         return (
           <motion.div
             initial={{ opacity: 0, x: 20 }}
@@ -394,7 +586,7 @@ const TripPlanner = () => {
           </motion.div>
         );
 
-      case 7:
+      case 8:
         return (
           <motion.div
             initial={{ opacity: 0, x: 20 }}
@@ -436,7 +628,7 @@ const TripPlanner = () => {
           </motion.div>
         );
 
-      case 8:
+      case 9:
         return (
           <motion.div
             initial={{ opacity: 0, x: 20 }}
@@ -480,7 +672,7 @@ const TripPlanner = () => {
           </motion.div>
         );
 
-      case 9:
+      case 10:
         return (
           <motion.div
             initial={{ opacity: 0, x: 20 }}
@@ -524,7 +716,7 @@ const TripPlanner = () => {
           </motion.div>
         );
 
-      case 10:
+      case 11:
         return (
           <motion.div
             initial={{ opacity: 0, x: 20 }}
@@ -568,7 +760,7 @@ const TripPlanner = () => {
           </motion.div>
         );
 
-      case 11:
+      case 12:
         return (
           <motion.div
             initial={{ opacity: 0, x: 20 }}
@@ -612,7 +804,7 @@ const TripPlanner = () => {
           </motion.div>
         );
 
-      case 12:
+      case 13:
         return (
           <motion.div
             initial={{ opacity: 0, x: 20 }}
@@ -699,340 +891,298 @@ const TripPlanner = () => {
   };
 
   return (
-    <div className="w-full">
-      {/* Hero Section */}
-      <section className="relative mb-12 h-[50vh] min-h-[400px]">
-        <div 
-          className="absolute inset-0 bg-cover bg-center" 
-          style={{ backgroundImage: "url('/planificador/hero-planificador.jpg')" }}
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-12 dark:from-gray-900 dark:to-gray-800">
+      <div className="container mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mx-auto max-w-4xl overflow-hidden rounded-2xl bg-white shadow-xl dark:bg-gray-800"
         >
-          <div className="absolute inset-0 bg-gradient-to-b from-primary/70 to-primary/40"></div>
-        </div>
-        <div className="absolute inset-0 flex items-center justify-center px-4 text-center">
-          <div className="max-w-4xl">
-            <h1 className="mb-6 text-5xl font-bold text-white md:text-6xl">
-              Diseña tu Experiencia Perfecta en Oaxaca
-            </h1>
-            <p className="text-xl text-white/90 md:text-2xl">
-              Nuestro planificador inteligente creará un itinerario personalizado según tus preferencias
-        </p>
-      </div>
-        </div>
-      </section>
+          {/* Barra de progreso animada */}
+          <div className="h-2 bg-gray-200 dark:bg-gray-700">
+            <motion.div
+              className="h-full bg-primary"
+              variants={progressBarVariants}
+              initial="initial"
+              animate="animate"
+            />
+          </div>
 
-      {/* Content container */}
-      <div className="container mx-auto px-4 pb-20">
-        {/* Progress navigation */}
-        <div className="mx-auto mb-8 max-w-5xl">
-          <div className="mb-6 flex justify-center">
-            <div className="scrollbar-hide flex overflow-x-auto pb-2">
-              <div className="flex min-w-max space-x-3">
-          {steps.map((s) => (
-                  <motion.button
-              key={s.id}
-                    initial={s.id === 1 ? { scale: 1 } : { scale: 0.95 }}
-              animate={s.id <= step ? {
-                scale: 1,
-                backgroundColor: s.id === step ? '#4F46E5' : '#3730A3',
-                transition: { duration: 0.2 }
-              } : {
-                      scale: 0.95,
-                backgroundColor: '#E5E7EB',
-                transition: { duration: 0.2 }
-              }}
-                    className="relative flex size-10 cursor-pointer items-center justify-center rounded-full text-sm font-medium text-white transition-transform hover:scale-105"
-              onClick={() => s.id < step && setStep(s.id)}
-              title={s.title}
+          {/* Contenido principal */}
+          <div className="p-8">
+            <motion.div
+              className="mb-8 flex items-center justify-between"
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
             >
-              {s.id <= step ? (
+              <div className="flex items-center space-x-4">
                 <motion.span
+                  className="text-3xl"
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                        transition={{ delay: 0.1 }}
+                  transition={{ type: "spring", stiffness: 200, damping: 10 }}
                 >
-                  {s.id}
+                  {steps[step - 1].icon}
                 </motion.span>
-              ) : (
-                s.id
-              )}
-                  </motion.button>
-          ))}
-        </div>
-            </div>
-          </div>
-          <div className="mb-8 text-center">
-            <span className="text-xl font-semibold text-primary">
-            {steps[step - 1].title}
-          </span>
-        </div>
-      </div>
+                <div>
+                  <motion.h2
+                    className="text-2xl font-bold text-primary dark:text-white"
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.3 }}
+                  >
+                    {steps[step - 1].title}
+                  </motion.h2>
+                  <motion.p
+                    className="text-sm text-gray-500 dark:text-gray-400"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.4 }}
+                  >
+                    Paso {step} de {steps.length}
+                  </motion.p>
+                </div>
+              </div>
+            </motion.div>
 
-        {/* Content section */}
-        <div className="mx-auto max-w-5xl">
-          <div className="flex min-h-[400px] flex-col">
-        <AnimatePresence mode="wait">
-          {renderStep()}
-        </AnimatePresence>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={step}
+                variants={stepVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                transition={{ duration: 0.3 }}
+              >
+                {renderStep()}
+              </motion.div>
+            </AnimatePresence>
 
-            <div className="mt-12 flex items-center justify-between">
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={prevStep}
-            disabled={step === 1}
-                className={`flex items-center space-x-2 rounded-xl px-8 py-4 font-medium transition-all ${step === 1
-                  ? 'cursor-not-allowed bg-gray-100 text-gray-400'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-              }`}
-          >
-                <svg className="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-            <span>Anterior</span>
-          </motion.button>
-
-          {step === steps.length ? (
-                <div className="flex flex-wrap justify-end gap-4">
-            <PDFDownloadLink
-              document={<TripPDF preferences={preferences} />}
-              fileName={`plan-viaje-oaxaca-${new Date().toISOString().split('T')[0]}.pdf`}
+            {/* Botones de navegación */}
+            <motion.div
+              className="mt-8 flex justify-between"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
             >
-              {({ loading }) => (
+              <motion.button
+                onClick={prevStep}
+                disabled={step === 1}
+                variants={buttonVariants}
+                initial="initial"
+                whileHover={step === 1 ? "disabled" : "hover"}
+                whileTap={step === 1 ? "disabled" : "tap"}
+                className={`rounded-lg px-6 py-2 transition-all ${step === 1
+                  ? 'cursor-not-allowed bg-gray-100 text-gray-400'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+              >
+                Anterior
+              </motion.button>
+
+              {step === steps.length ? (
+                <div className="flex space-x-4">
+                  <PDFDownloadLink
+                    document={<TripPDF preferences={preferences} />}
+                    fileName={`plan-viaje-${preferences.destination}-${new Date().toISOString().split('T')[0]}.pdf`}
+                  >
+                    {({ loading }) => (
+                      <motion.button
+                        variants={buttonVariants}
+                        whileHover="hover"
+                        whileTap="tap"
+                        className="rounded-lg bg-primary px-6 py-2 text-white transition-colors hover:bg-primary-dark"
+                      >
+                        {loading ? 'Generando PDF...' : 'Descargar PDF'}
+                      </motion.button>
+                    )}
+                  </PDFDownloadLink>
+                  <motion.button
+                    onClick={() => {
+                      setShowQRModal(true);
+                      generatePDF();
+                    }}
+                    variants={buttonVariants}
+                    whileHover="hover"
+                    whileTap="tap"
+                    className="rounded-lg bg-green-600 px-6 py-2 text-white transition-colors hover:bg-green-700"
+                  >
+                    Generar QR
+                  </motion.button>
+                </div>
+              ) : (
                 <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                        className="flex items-center space-x-2 rounded-xl bg-primary px-8 py-4 font-medium text-white transition-all hover:bg-primary-dark"
+                  onClick={nextStep}
+                  variants={buttonVariants}
+                  whileHover="hover"
+                  whileTap="tap"
+                  className="rounded-lg bg-primary px-6 py-2 text-white transition-colors hover:bg-primary-dark"
                 >
-                        <svg className="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                  </svg>
-                  <span>{loading ? 'Generando PDF...' : 'Descargar Plan de Viaje'}</span>
+                  Siguiente
                 </motion.button>
               )}
-            </PDFDownloadLink>
-                  
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={() => setShowQRModal(true)}
-                    className="flex items-center space-x-2 rounded-xl bg-green-600 px-8 py-4 font-medium text-white transition-all hover:bg-green-700"
-                  >
-                    <svg className="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
-                    </svg>
-                    <span>Generar Código QR</span>
-                  </motion.button>
-                </div>
-          ) : (
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={nextStep}
-                  className="flex items-center space-x-2 rounded-xl bg-primary px-8 py-4 font-medium text-white transition-all hover:bg-primary-dark"
-            >
-              <span>Siguiente</span>
-                  <svg className="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </motion.button>
-          )}
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
+      </div>
 
-        {/* QR Code Modal */}
-        <AnimatePresence>
-          {showQRModal && (
+      {/* Modal de QR con animaciones mejoradas */}
+      <AnimatePresence>
+        {showQRModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+            onClick={() => setShowQRModal(false)}
+          >
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
-              onClick={() => setShowQRModal(false)}
+              variants={modalVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl"
+              onClick={e => e.stopPropagation()}
             >
               <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.9, opacity: 0 }}
-                className="w-full max-w-md rounded-xl bg-white p-6 shadow-xl"
-                onClick={e => e.stopPropagation()}
+                className="mb-4 flex items-center justify-between"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
               >
-                <div className="mb-4 flex items-center justify-between">
-                  <h3 className="text-xl font-bold text-gray-800">Descarga tu Plan de Viaje</h3>
-                  <button 
-                    onClick={() => setShowQRModal(false)}
-                    className="text-gray-500 hover:text-gray-700"
+                <h3 className="text-xl font-bold text-gray-800">Descarga tu Plan de Viaje</h3>
+                <motion.button
+                  onClick={() => setShowQRModal(false)}
+                  className="text-gray-500 hover:text-gray-700"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <svg className="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </motion.button>
+              </motion.div>
+
+              <motion.div
+                className="flex flex-col items-center justify-center pb-4"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.3 }}
+              >
+                {qrLoading ? (
+                  <motion.div
+                    className="flex flex-col items-center py-8"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
                   >
-                    <svg className="size-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
-                
-                <div className="flex flex-col items-center justify-center pb-4">
-                  {qrLoading ? (
-                    <div className="flex flex-col items-center py-8">
-                      <svg className="size-16 animate-spin text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    <motion.svg
+                      className="size-16 text-primary"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    >
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </motion.svg>
+                    <motion.p
+                      className="mt-4 text-gray-600"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.2 }}
+                    >
+                      Generando y subiendo PDF...
+                    </motion.p>
+                  </motion.div>
+                ) : uploadError ? (
+                  <motion.div
+                    className="flex flex-col items-center py-8"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                  >
+                    <motion.div
+                      className="mb-4 flex size-16 items-center justify-center rounded-full bg-red-100"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ type: "spring", stiffness: 200, damping: 10 }}
+                    >
+                      <svg className="size-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
-                      <p className="mt-4 text-gray-600">Generando y subiendo PDF...</p>
-                    </div>
-                  ) : uploadError ? (
-                    <div className="flex flex-col items-center py-8">
-                      <div className="mb-4 flex size-16 items-center justify-center rounded-full bg-red-100">
-                        <svg className="size-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                      <h4 className="mb-2 text-lg font-medium text-gray-800">Error al subir el PDF</h4>
-                      <p className="text-center text-sm text-gray-600">{uploadError}</p>
-                      <button
-                        onClick={() => generatePDF()}
-                        className="mt-4 rounded-lg bg-primary px-4 py-2 text-white hover:bg-primary-dark"
-                      >
-                        Reintentar
-                      </button>
-                    </div>
-                  ) : (
-                    <>
-                      <div className="mb-4 size-64 overflow-hidden rounded-lg border-2 border-gray-200 bg-white p-2 shadow-md">
-                        {qrData && (
-                          <img 
-                            src={`https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(qrData)}`} 
-                            alt="Código QR para descargar PDF" 
-                            className="size-full object-cover"
-                          />
-                        )}
-                      </div>
-                      <h4 className="mb-2 text-lg font-medium text-gray-800">Escanea para descargar</h4>
-                      <p className="text-center text-sm text-gray-600">
-                        Escanea este código QR con tu dispositivo móvil para descargar tu plan de viaje personalizado directamente.
-                      </p>
-                      
-                      {/* <div className="mt-6 w-full border-t border-gray-200 pt-6">
-                        <div className="flex flex-col space-y-4">
-                          <p className="text-center text-sm font-medium text-gray-700">
-                            Otras opciones para guardar tu plan:
-                          </p>
-                          
-                          {pdfBlob && (
-                            <a 
-                              href={pdfBlob} 
-                              download={`plan-viaje-oaxaca-${new Date().toISOString().split('T')[0]}.pdf`}
-                              className="flex items-center justify-center space-x-2 rounded-lg bg-primary px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-primary-dark"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              <svg className="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                              </svg>
-                              <span>Descargar PDF ahora</span>
-                            </a>
-                          )}
-                          
-                          <button
-                            onClick={() => {
-                              if (qrData) {
-                                navigator.clipboard.writeText(qrData);
-                                alert('¡Enlace copiado al portapapeles!');
-                              }
-                            }}
-                            className="flex items-center justify-center space-x-2 rounded-lg border border-gray-300 bg-white px-4 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
-                          >
-                            <svg className="size-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-2M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
-                            </svg>
-                            <span>Copiar enlace</span>
-                          </button>
-                        </div>
-                      </div> */}
-                    </>
-                  )}
-                </div>
-                
-                <div className="mt-4 text-center">
-                  <motion.button 
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => setShowQRModal(false)}
-                    className="inline-flex items-center space-x-2 rounded-lg border border-gray-300 bg-white px-6 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                    </motion.div>
+                    <motion.h4
+                      className="mb-2 text-lg font-medium text-gray-800"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.2 }}
+                    >
+                      Error al subir el PDF
+                    </motion.h4>
+                    <motion.p
+                      className="text-center text-sm text-gray-600"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: 0.3 }}
+                    >
+                      {uploadError}
+                    </motion.p>
+                    <motion.button
+                      onClick={generatePDF}
+                      className="mt-4 rounded-lg bg-primary px-4 py-2 text-white hover:bg-primary-dark"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      Reintentar
+                    </motion.button>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.3 }}
                   >
-                    <span>Cerrar</span>
-                  </motion.button>
-                </div>
+                    <motion.div
+                      className="mb-4 size-64 overflow-hidden rounded-lg border-2 border-gray-200 bg-white p-2 shadow-md"
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {qrData && (
+                        <motion.img
+                          src={`https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(qrData)}`}
+                          alt="Código QR para descargar PDF"
+                          className="size-full object-cover"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          transition={{ delay: 0.2 }}
+                        />
+                      )}
+                    </motion.div>
+                    <motion.h4
+                      className="mb-2 text-lg font-medium text-gray-800"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.3 }}
+                    >
+                      Escanea para descargar
+                    </motion.h4>
+                    <motion.p
+                      className="text-center text-sm text-gray-600"
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 }}
+                    >
+                      Escanea este código QR con tu dispositivo móvil para descargar tu plan de viaje personalizado directamente.
+                    </motion.p>
+                  </motion.div>
+                )}
               </motion.div>
             </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Beneficios Section */}
-        <div className="mx-auto mt-32 max-w-6xl">
-          <h2 className="mb-16 text-center text-3xl font-bold text-primary md:text-4xl">Beneficios de Nuestro Planificador</h2>
-          
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
-            <div className="group">
-              <div className="mx-auto mb-6 flex size-16 items-center justify-center rounded-full bg-primary/10 transition-colors group-hover:bg-primary/20">
-                <svg className="size-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                </svg>
-              </div>
-              <h3 className="mb-4 text-center text-2xl font-semibold">Personalización Total</h3>
-              <p className="text-center text-lg text-gray-600">
-                Adaptamos cada detalle del viaje a tus preferencias y necesidades específicas
-              </p>
-            </div>
-
-            <div className="group">
-              <div className="mx-auto mb-6 flex size-16 items-center justify-center rounded-full bg-primary/10 transition-colors group-hover:bg-primary/20">
-                <svg className="size-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="mb-4 text-center text-2xl font-semibold">Ahorro de Tiempo</h3>
-              <p className="text-center text-lg text-gray-600">
-                Evita horas de investigación con nuestro sistema que condensa toda la experiencia local
-              </p>
-            </div>
-
-            <div className="group">
-              <div className="mx-auto mb-6 flex size-16 items-center justify-center rounded-full bg-primary/10 transition-colors group-hover:bg-primary/20">
-                <svg className="size-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-              </div>
-              <h3 className="mb-4 text-center text-2xl font-semibold">Experiencia Local</h3>
-              <p className="text-center text-lg text-gray-600">
-                Descubre los secretos que solo los locales conocen con recomendaciones auténticas
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Testimonio Section */}
-        <div className="mx-auto mt-32 max-w-4xl">
-          <h2 className="mb-16 text-center text-3xl font-bold text-primary md:text-4xl">Lo que dicen nuestros usuarios</h2>
-          <div className="rounded-3xl bg-gray-50 p-10 md:p-12">
-            <div className="flex flex-col items-center space-y-8 md:flex-row md:space-x-12 md:space-y-0">
-              <div className="size-28 shrink-0 overflow-hidden rounded-full border-4 border-white shadow-lg">
-                <img src="/testimonios/testimonio1.jpg" alt="Cliente satisfecho" className="size-full object-cover" />
-              </div>
-              <div>
-                <svg className="mb-6 size-12 text-primary/30" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                </svg>
-                <p className="mb-8 text-xl italic leading-relaxed text-gray-700">
-                  El planificador de viaje hizo toda la diferencia. En lugar de pasar horas investigando, tuve un plan perfecto en minutos. Descubrí lugares que nunca hubiera encontrado por mi cuenta.
-                </p>
-                <div>
-                  <h4 className="text-lg font-semibold">María González</h4>
-                  <p className="text-gray-600">Visitó Oaxaca en 2023</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

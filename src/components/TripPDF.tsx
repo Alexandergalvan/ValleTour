@@ -188,6 +188,7 @@ const styles = StyleSheet.create({
 
 interface TripPDFProps {
   preferences: {
+    destination: string;
     duration: number;
     startDate: string;
     budget: string;
@@ -203,7 +204,96 @@ interface TripPDFProps {
   };
 }
 
+const destinations = [
+  {
+    id: "monte-alban",
+    title: 'Monte Albán',
+    description: 'Antigua ciudad zapoteca declarada Patrimonio de la Humanidad por la UNESCO.',
+    image: '/destinos/monte.webp',
+    category: 'Arqueología',
+    price: '899',
+    features: [
+      'Vistas panorámicas del Valle de Oaxaca',
+      'Juego de Pelota',
+      'Observatorio astronómico',
+      'Galería de los Danzantes'
+    ]
+  },
+  {
+    id: "hierve-el-agua",
+    title: 'Hierve el Agua',
+    description: 'Formaciones rocosas naturales que simulan cascadas petrificadas.',
+    image: '/destinos/agua.webp',
+    category: 'Naturaleza',
+    price: '699',
+    features: [
+      'Piscinas naturales',
+      'Miradores espectaculares',
+      'Área para camping',
+      'Guías locales'
+    ]
+  },
+  {
+    id: "mitla",
+    title: 'Mitla',
+    description: 'Ciudad zapoteca conocida por sus elaborados mosaicos geométricos.',
+    image: '/destinos/mitla.webp',
+    category: 'Arqueología',
+    price: '799',
+    features: [
+      'Palacio de las Columnas',
+      'Patrones geométricos únicos',
+      'Centro ceremonial',
+      'Museo del sitio'
+    ]
+  },
+  {
+    id: "centro-historico",
+    title: 'Centro Histórico de Oaxaca',
+    description: 'Ciudad colonial con arquitectura barroca y tradiciones vivas.',
+    image: '/destinos/centro.webp',
+    category: 'Cultura',
+    price: '599',
+    features: [
+      'Catedral de Oaxaca',
+      'Templo de Santo Domingo',
+      'Mercado 20 de Noviembre',
+      'Zócalo'
+    ]
+  },
+  {
+    id: "pueblos-mancomunados",
+    title: 'Pueblos Mancomunados',
+    description: 'Red de comunidades indígenas en la Sierra Norte de Oaxaca.',
+    image: '/destinos/pueblos.webp',
+    category: 'Ecoturismo',
+    price: '999',
+    features: [
+      'Senderismo',
+      'Ciclismo de montaña',
+      'Cabañas ecológicas',
+      'Gastronomía local'
+    ]
+  },
+  {
+    id: "bahias-huatulco",
+    title: 'Bahías de Huatulco',
+    description: 'Complejo turístico con playas vírgenes y arrecifes de coral.',
+    image: '/destinos/bahias.webp',
+    category: 'Playa',
+    price: '1299',
+    features: [
+      'Snorkeling',
+      'Paseos en lancha',
+      'Playas desiertas',
+      'Parque Nacional'
+    ]
+  }
+];
+
 const TripPDF = ({ preferences }: TripPDFProps) => {
+  const selectedDestination = destinations.find(dest => dest.id === preferences.destination);
+
   const formatDate = (date: string) => {
     if (!date) return 'Fecha por definir';
     try {
@@ -458,23 +548,23 @@ const TripPDF = ({ preferences }: TripPDFProps) => {
       }
     };
 
-    const budgetCategory = budget === 'economic' ? 'economic' : 
-                          budget === 'moderate' ? 'moderate' : 
-                          budget === 'comfort' ? 'comfort' : 
-                          budget === 'luxury' ? 'luxury' : 'moderate';
-    
+    const budgetCategory = budget === 'economic' ? 'economic' :
+      budget === 'moderate' ? 'moderate' :
+        budget === 'comfort' ? 'comfort' :
+          budget === 'luxury' ? 'luxury' : 'moderate';
+
     return recommendations[budgetCategory][accommodation] || [];
   };
 
   const getRecommendedRestaurants = (budget: string, mealPreferences: string[]) => {
     const restaurantList = [];
-    
-    const isVegetarianOrVegan = mealPreferences.some(pref => 
+
+    const isVegetarianOrVegan = mealPreferences.some(pref =>
       ['Vegetariano', 'Vegano'].includes(pref));
-    
+
     const isLocalFood = mealPreferences.includes('Comida Local');
     const isStreetFood = mealPreferences.includes('Street Food');
-    
+
     if (budget === 'economic') {
       if (isLocalFood || restaurantList.length === 0) {
         restaurantList.push('Mercado 20 de Noviembre (comedores populares, $70-150 MXN por comida)');
@@ -487,7 +577,7 @@ const TripPDF = ({ preferences }: TripPDFProps) => {
       if (isVegetarianOrVegan && restaurantList.length < 5) {
         restaurantList.push('La Jícara (opciones vegetarianas y veganas, $80-180 MXN por persona)');
       }
-      
+
       // Completar con opciones económicas generales si es necesario
       if (restaurantList.length < 4) {
         restaurantList.push('Fonda Florecita (comida tradicional, $80-150 MXN por persona)');
@@ -502,7 +592,7 @@ const TripPDF = ({ preferences }: TripPDFProps) => {
         restaurantList.push('Hierba Dulce (cocina vegana oaxaqueña, $150-300 MXN por persona)');
         restaurantList.push('Cabuche (opciones vegetarianas, $180-350 MXN por persona)');
       }
-      
+
       // Completar con opciones moderadas generales si es necesario
       if (restaurantList.length < 4) {
         restaurantList.push('Catedral (cocina oaxaqueña contemporánea, $250-450 MXN por persona)');
@@ -516,45 +606,45 @@ const TripPDF = ({ preferences }: TripPDFProps) => {
       if (isVegetarianOrVegan && restaurantList.length < 5) {
         restaurantList.push('Criollo (opciones vegetarianas gourmet, $600-1200 MXN por persona)');
       }
-      
+
       // Completar con opciones premium generales si es necesario
       if (restaurantList.length < 4) {
         restaurantList.push('Origen (cocina de autor, $500-1000 MXN por persona)');
         restaurantList.push('Levadura de Olla (cocina gourmet, $450-900 MXN por persona)');
       }
-      
+
       // Añadir opciones exclusivas para presupuesto de lujo
       if (budget === 'luxury' && restaurantList.length < 5) {
         restaurantList.push('Experiencia gastronómica privada con chef ($1500-3000 MXN por persona)');
         restaurantList.push('Cata de mezcales premium con maridaje ($800-1500 MXN por persona)');
       }
     }
-    
+
     return restaurantList.slice(0, 5); // Limitar a 5 recomendaciones
   };
 
   const getRecommendedActivities = (interests: string[], activities: string[], budget: string) => {
     const allRecommendations = [];
-    
+
     // Actividades basadas en intereses
     if (interests.includes('Cultura') || interests.includes('Historia')) {
       allRecommendations.push('Visita al Museo de las Culturas de Oaxaca (Ex-Convento de Santo Domingo)');
       allRecommendations.push('Recorrido guiado por el Centro Histórico');
       allRecommendations.push('Visita al Museo Textil de Oaxaca');
     }
-    
+
     if (interests.includes('Arqueología')) {
       allRecommendations.push('Visita a la zona arqueológica de Monte Albán');
       allRecommendations.push('Exploración de las ruinas de Mitla');
       allRecommendations.push('Visita al sitio arqueológico de Yagul');
     }
-    
+
     if (interests.includes('Artesanías')) {
       allRecommendations.push('Visita a los talleres de alebrijes en San Martín Tilcajete');
       allRecommendations.push('Recorrido por los telares de Teotitlán del Valle');
       allRecommendations.push('Visita a talleres de barro negro en San Bartolo Coyotepec');
     }
-    
+
     if (interests.includes('Gastronomía')) {
       if (activities.includes('Clases de Cocina')) {
         allRecommendations.push('Clase de cocina tradicional oaxaqueña (aprende a preparar mole y tlayudas)');
@@ -562,7 +652,7 @@ const TripPDF = ({ preferences }: TripPDFProps) => {
       allRecommendations.push('Tour gastronómico por los mercados locales');
       allRecommendations.push('Cata de mezcal con maridaje de platillos regionales');
     }
-    
+
     if (interests.includes('Naturaleza') || interests.includes('Ecoturismo')) {
       if (activities.includes('Senderismo')) {
         allRecommendations.push('Senderismo en la Sierra Norte (Pueblos Mancomunados)');
@@ -572,7 +662,7 @@ const TripPDF = ({ preferences }: TripPDFProps) => {
         allRecommendations.push('Tour de observación de aves en la Sierra de Juárez');
       }
     }
-    
+
     if (interests.includes('Aventura')) {
       if (activities.includes('Ciclismo')) {
         allRecommendations.push('Ruta de ciclismo de montaña por la Sierra Norte');
@@ -582,51 +672,51 @@ const TripPDF = ({ preferences }: TripPDFProps) => {
       }
       allRecommendations.push('Espeleología en las grutas de San Sebastián de las Grutas');
     }
-    
+
     if (interests.includes('Pueblos Mágicos')) {
       allRecommendations.push('Visita a Tepoztlán y su mercado artesanal');
       allRecommendations.push('Recorrido por Capulálpam de Méndez, Pueblo Mágico en la Sierra Norte');
     }
-    
+
     // Actividades específicas seleccionadas
     if (activities.includes('Tours Culturales')) {
       allRecommendations.push('Tour nocturno de leyendas en el centro histórico');
       allRecommendations.push('Visita guiada a la Biblioteca Burgoa y sus incunables');
     }
-    
+
     if (activities.includes('Talleres Artesanales')) {
       allRecommendations.push('Taller de cerámica tradicional');
       allRecommendations.push('Clase de tejido en telar de cintura');
     }
-    
+
     if (activities.includes('Yoga y Bienestar')) {
       allRecommendations.push('Sesión de temazcal (baño de vapor tradicional prehispánico)');
       allRecommendations.push('Clase de yoga al amanecer en un jardín histórico');
     }
-    
+
     // Añadir experiencias exclusivas para presupuestos más altos
     if (budget === 'comfort' || budget === 'luxury') {
       allRecommendations.push('Tour privado en helicóptero sobre Monte Albán y los valles centrales');
       allRecommendations.push('Experiencia de mezcal: destilería exclusiva con el maestro mezcalero');
-      
+
       if (budget === 'luxury') {
         allRecommendations.push('Cena privada con chef reconocido en locación histórica exclusiva');
         allRecommendations.push('Acceso VIP a celebraciones tradicionales como la Guelaguetza');
       }
     }
-    
+
     // Filtrar duplicados y limitar a 8 recomendaciones para no sobrecargar
     return [...new Set(allRecommendations)].slice(0, 8);
   };
 
   const getSeasonalEvents = (startDate: string) => {
     if (!startDate) return [];
-    
+
     const date = new Date(startDate);
     const month = date.getMonth() + 1; // getMonth() devuelve 0-11
-    
+
     const events = [];
-    
+
     switch (month) {
       case 1: // Enero
         events.push('Fiesta de la Virgen de la Juquila (todo el mes)');
@@ -681,7 +771,7 @@ const TripPDF = ({ preferences }: TripPDFProps) => {
       default:
         return [];
     }
-    
+
     return events;
   };
 
@@ -693,33 +783,33 @@ const TripPDF = ({ preferences }: TripPDFProps) => {
       'El sol puede ser intenso, especialmente en zonas arqueológicas. Lleve protector solar, sombrero y agua.',
       'Pruebe el chocolate caliente oaxaqueño tradicional en cualquiera de los cafés del Zócalo.'
     ];
-    
+
     // Añadir tips específicos según preferencias
     if (preferences.transportation === 'rental') {
       tips.push('Estacionar en el Centro Histórico puede ser complicado. Considere estacionamientos públicos como el del Mercado 20 de Noviembre.');
       tips.push('Algunas zonas arqueológicas tienen carreteras de acceso en condiciones variables. Consulte el estado antes de partir.');
     }
-    
+
     if (preferences.transportation === 'public') {
       tips.push('Los colectivos (camionetas compartidas) son una forma económica y auténtica de viajar a pueblos cercanos. Salen cuando se llenan.');
       tips.push('Para usar el transporte público urbano, es útil tener ubicaciones guardadas offline en su teléfono.');
     }
-    
+
     if (preferences.interests.includes('Gastronomía')) {
       tips.push('Los desayunos en los mercados (6-10 AM) ofrecen las experiencias culinarias más auténticas.');
       tips.push('Pruebe los siete moles de Oaxaca, cada uno con características únicas.');
     }
-    
+
     if (preferences.mealPreferences.includes('Vegetariano') || preferences.mealPreferences.includes('Vegano')) {
       tips.push('Comunique claramente sus preferencias alimentarias, ya que muchos platillos tradicionales contienen caldo de pollo o manteca de cerdo.');
       tips.push('La app Happy Cow puede ayudarle a encontrar opciones vegetarianas y veganas en Oaxaca.');
     }
-    
+
     if (preferences.accessibility.length > 0) {
       tips.push('Llamar con anticipación a los lugares que planea visitar para confirmar las condiciones de accesibilidad.');
       tips.push('El Centro Cultural Santo Domingo y el Museo de las Culturas de Oaxaca cuentan con rampas y ascensores.');
     }
-    
+
     return tips;
   };
 
@@ -731,17 +821,17 @@ const TripPDF = ({ preferences }: TripPDFProps) => {
   const travelTips = getTravelTips(preferences);
 
   const totalDays = preferences.duration || 0;
-  const dailyCostEstimate = preferences.budget === 'economic' ? 1500 : 
-                            preferences.budget === 'moderate' ? 2500 : 
-                            preferences.budget === 'comfort' ? 5000 : 8000;
+  const dailyCostEstimate = preferences.budget === 'economic' ? 1500 :
+    preferences.budget === 'moderate' ? 2500 :
+      preferences.budget === 'comfort' ? 5000 : 8000;
   const totalCostEstimate = totalDays * preferences.groupSize * dailyCostEstimate;
 
   return (
     <Document>
       <Page size="A4" style={styles.page} wrap>
         <View style={styles.header}>
-          <Image 
-            src="/logo.png" 
+          <Image
+            src="/logo.png"
             style={styles.logo}
             cache={false}
           />
@@ -749,6 +839,22 @@ const TripPDF = ({ preferences }: TripPDFProps) => {
           <Text style={styles.subtitle}>Oaxaca, México</Text>
           <Text style={styles.date}>Generado el {new Date().toLocaleDateString('es-MX')}</Text>
         </View>
+
+        {selectedDestination && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Destino Seleccionado</Text>
+            <Text style={styles.activityTitle}>{selectedDestination.title}</Text>
+            <Text style={styles.text}>{selectedDestination.description}</Text>
+            <Text style={styles.text}>Categoría: {selectedDestination.category}</Text>
+            <Text style={styles.text}>Precio base: ${selectedDestination.price} MXN</Text>
+            <View style={styles.recommendationBox}>
+              <Text style={styles.recommendationTitle}>Características destacadas:</Text>
+              {selectedDestination.features.map((feature, index) => (
+                <Text key={index} style={styles.listItem}>• {feature}</Text>
+              ))}
+            </View>
+          </View>
+        )}
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Resumen Ejecutivo</Text>
@@ -848,7 +954,7 @@ const TripPDF = ({ preferences }: TripPDFProps) => {
                 <Text style={styles.highlight}>Idiomas: </Text>
                 {preferences.languages.join(', ')}
               </Text>
-          </View>
+            </View>
           </View>
 
           {preferences.accessibility.length > 0 && (
@@ -866,31 +972,31 @@ const TripPDF = ({ preferences }: TripPDFProps) => {
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Intereses y Actividades</Text>
-          
-            {preferences.interests.length > 0 && (
+
+          {preferences.interests.length > 0 && (
             <View>
               <Text style={styles.text}>
                 <Text style={styles.highlight}>Intereses principales: </Text>
                 {preferences.interests.join(', ')}
               </Text>
             </View>
-            )}
-            
-            {preferences.activities.length > 0 && (
+          )}
+
+          {preferences.activities.length > 0 && (
             <View>
               <Text style={styles.text}>
                 <Text style={styles.highlight}>Actividades preferidas: </Text>
                 {preferences.activities.join(', ')}
-                </Text>
+              </Text>
             </View>
-            )}
+          )}
 
-            {preferences.mealPreferences.length > 0 && (
+          {preferences.mealPreferences.length > 0 && (
             <View>
               <Text style={styles.text}>
                 <Text style={styles.highlight}>Preferencias gastronómicas: </Text>
                 {preferences.mealPreferences.join(', ')}
-                </Text>
+              </Text>
             </View>
           )}
 
@@ -908,7 +1014,7 @@ const TripPDF = ({ preferences }: TripPDFProps) => {
           <Text style={styles.sectionTitle}>Alojamientos Recomendados</Text>
           <Text style={styles.text}>
             Basado en sus preferencias de {getAccommodationText(preferences.accommodation)} y un presupuesto {getBudgetText(preferences.budget).toLowerCase()}, le recomendamos:
-                </Text>
+          </Text>
           <View style={styles.list}>
             {recommendedAccommodations.map((accommodation, index) => (
               <Text key={index} style={styles.listItem}>• {accommodation}</Text>
@@ -923,7 +1029,7 @@ const TripPDF = ({ preferences }: TripPDFProps) => {
           <Text style={styles.sectionTitle}>Restaurantes Recomendados</Text>
           <Text style={styles.text}>
             Selección de establecimientos que se adaptan a sus preferencias gastronómicas:
-                </Text>
+          </Text>
           <View style={styles.list}>
             {recommendedRestaurants.map((restaurant, index) => (
               <Text key={index} style={styles.listItem}>• {restaurant}</Text>
@@ -937,18 +1043,18 @@ const TripPDF = ({ preferences }: TripPDFProps) => {
             Array.from({ length: Math.min(preferences.duration, 7) }).map((_, index) => (
               <View key={index}>
                 <Text style={styles.dayTitle}>Día {index + 1}: {getDateForDay(preferences.startDate, index)}</Text>
-                
+
                 {index === 0 ? (
                   // Primer día
                   <View>
                     <Text style={styles.activityTitle}>Mañana</Text>
                     <Text style={styles.text}>• Llegada y check-in en su alojamiento</Text>
                     <Text style={styles.text}>• Recorrido de orientación por el centro histórico</Text>
-                    
+
                     <Text style={styles.activityTitle}>Tarde</Text>
                     <Text style={styles.text}>• Visita al Zócalo y la Catedral de Oaxaca</Text>
                     <Text style={styles.text}>• Paseo por el Andador Turístico</Text>
-                    
+
                     <Text style={styles.activityTitle}>Noche</Text>
                     <Text style={styles.text}>• Cena de bienvenida en {preferences.budget === 'economic' ? 'el Mercado 20 de Noviembre' : 'un restaurante tradicional oaxaqueño'}</Text>
                   </View>
@@ -958,10 +1064,10 @@ const TripPDF = ({ preferences }: TripPDFProps) => {
                     <Text style={styles.activityTitle}>Mañana</Text>
                     <Text style={styles.text}>• Visita al Ex-Convento de Santo Domingo</Text>
                     <Text style={styles.text}>• Recorrido por el Jardín Etnobotánico</Text>
-                    
+
                     <Text style={styles.activityTitle}>Tarde</Text>
                     <Text style={styles.text}>• {preferences.interests.includes('Arqueología') ? 'Visita a la zona arqueológica de Monte Albán' : 'Visita al Museo de las Culturas de Oaxaca'}</Text>
-                    
+
                     <Text style={styles.activityTitle}>Noche</Text>
                     <Text style={styles.text}>• {preferences.interests.includes('Gastronomía') ? 'Cata de mezcales con maridaje gastronómico' : 'Paseo nocturno por el centro histórico iluminado'}</Text>
                   </View>
@@ -970,10 +1076,10 @@ const TripPDF = ({ preferences }: TripPDFProps) => {
                   <View>
                     <Text style={styles.activityTitle}>Mañana</Text>
                     <Text style={styles.text}>• {preferences.interests.includes('Artesanías') ? 'Visita a talleres artesanales en San Bartolo Coyotepec (barro negro)' : 'Tour por mercados locales'}</Text>
-                    
+
                     <Text style={styles.activityTitle}>Tarde</Text>
                     <Text style={styles.text}>• {preferences.interests.includes('Naturaleza') ? 'Excursión a las Cascadas Petrificadas de Hierve el Agua' : 'Visita a la zona arqueológica de Mitla'}</Text>
-                    
+
                     <Text style={styles.activityTitle}>Noche</Text>
                     <Text style={styles.text}>• {preferences.activities.includes('Recorridos Gastronómicos') ? 'Tour gastronómico nocturno' : 'Cena y paseo por el centro'}</Text>
                   </View>
@@ -982,10 +1088,10 @@ const TripPDF = ({ preferences }: TripPDFProps) => {
                   <View>
                     <Text style={styles.activityTitle}>Mañana</Text>
                     <Text style={styles.text}>• {preferences.activities.includes('Clases de Cocina') ? 'Clase de cocina tradicional oaxaqueña' : 'Visita al Museo Textil de Oaxaca'}</Text>
-                    
+
                     <Text style={styles.activityTitle}>Tarde</Text>
                     <Text style={styles.text}>• {preferences.interests.includes('Pueblos Mágicos') ? 'Excursión a Teotitlán del Valle (pueblo de tejedores)' : 'Visita al Museo de Arte Contemporáneo'}</Text>
-                    
+
                     <Text style={styles.activityTitle}>Noche</Text>
                     <Text style={styles.text}>• {preferences.interests.includes('Vida Nocturna') ? 'Tour de mezcalerías en el centro' : 'Cena en un patio tradicional oaxaqueño'}</Text>
                   </View>
@@ -995,10 +1101,10 @@ const TripPDF = ({ preferences }: TripPDFProps) => {
                     <Text style={styles.activityTitle}>Mañana</Text>
                     <Text style={styles.text}>• Día libre para explorar según sus intereses</Text>
                     <Text style={styles.text}>• {preferences.activities.includes('Senderismo') ? 'Excursión a la Sierra Norte' : 'Visita a la Biblioteca Burgoa'}</Text>
-                    
+
                     <Text style={styles.activityTitle}>Tarde</Text>
                     <Text style={styles.text}>• {preferences.interests.includes('Artesanías') ? 'Visita a San Martín Tilcajete (talleres de alebrijes)' : 'Tour histórico por el centro'}</Text>
-                    
+
                     <Text style={styles.activityTitle}>Noche</Text>
                     <Text style={styles.text}>• {preferences.budget === 'luxury' ? 'Cena de despedida en restaurante gourmet' : 'Noche folklórica con danzas tradicionales'}</Text>
                   </View>
@@ -1008,7 +1114,7 @@ const TripPDF = ({ preferences }: TripPDFProps) => {
                     <Text style={styles.activityTitle}>Día Completo</Text>
                     <Text style={styles.text}>• {preferences.travelStyle === 'adventure' ? 'Excursión a las grutas de San Sebastián' : 'Día de descanso con actividades ligeras'}</Text>
                     <Text style={styles.text}>• {preferences.activities.includes('Yoga y Bienestar') ? 'Sesión de temazcal tradicional' : 'Compras de último momento para souvenirs'}</Text>
-                    
+
                     <Text style={styles.activityTitle}>Noche</Text>
                     <Text style={styles.text}>• {preferences.interests.includes('Gastronomía') ? 'Degustación de postres tradicionales oaxaqueños' : 'Velada tranquila en su alojamiento'}</Text>
                   </View>
@@ -1018,18 +1124,18 @@ const TripPDF = ({ preferences }: TripPDFProps) => {
                     <Text style={styles.activityTitle}>Mañana</Text>
                     <Text style={styles.text}>• Tiempo libre para últimas compras</Text>
                     <Text style={styles.text}>• Check-out del alojamiento</Text>
-                    
+
                     <Text style={styles.activityTitle}>Mediodía</Text>
                     <Text style={styles.text}>• Traslado al aeropuerto/terminal</Text>
                     <Text style={styles.text}>• Fin de los servicios</Text>
                   </View>
-            )}
-          </View>
+                )}
+              </View>
             ))
           ) : (
             <Text style={styles.text}>Por favor seleccione una duración para generar un itinerario.</Text>
           )}
-          
+
           <Text style={styles.italicText}>
             *Este itinerario es una sugerencia y puede ser adaptado según sus necesidades y preferencias.
           </Text>
@@ -1081,14 +1187,14 @@ const TripPDF = ({ preferences }: TripPDFProps) => {
                 <Text>{estimatedCosts.transportation}</Text>
               </View>
             </View>
-              </View>
+          </View>
           <Text style={[styles.italicText, { marginTop: 8 }]}>
             *Presupuesto aproximado basado en sus preferencias seleccionadas. Los precios pueden variar según temporada y disponibilidad.
           </Text>
           <Text style={[styles.italicText, { marginTop: 4 }]}>
             *Para un grupo de {preferences.groupSize} persona(s), considere un presupuesto total aproximado de {totalCostEstimate} MXN para toda la estancia.
           </Text>
-              </View>
+        </View>
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Consejos Útiles</Text>
@@ -1099,11 +1205,11 @@ const TripPDF = ({ preferences }: TripPDFProps) => {
               ))}
             </View>
           </View>
-          
+
           <View style={styles.alertBox}>
             <Text style={styles.text}>
               <Text style={styles.highlight}>Información importante:</Text>
-          </Text>
+            </Text>
             <Text style={styles.listItem}>• El clima en Oaxaca es generalmente templado, con temperaturas entre 15-30°C según la época del año.</Text>
             <Text style={styles.listItem}>• Se recomienda llevar siempre una identificación y copia de documentos importantes.</Text>
             <Text style={styles.listItem}>• Número de emergencias en México: 911</Text>

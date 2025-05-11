@@ -5,6 +5,7 @@ export interface AuthUser {
   email: string;
   name?: string;
   avatar_url?: string;
+  phone?: string;
   created_at?: string;
 }
 
@@ -15,6 +16,7 @@ export interface UserCredentials {
 
 export interface SignUpData extends UserCredentials {
   name?: string;
+  phone?: string;
 }
 
 /**
@@ -22,7 +24,7 @@ export interface SignUpData extends UserCredentials {
  */
 export const signUp = async (data: SignUpData): Promise<{ user: AuthUser | null; error: Error | null }> => {
   const { email, password, name } = data;
-  
+
   // Registrar el usuario con Supabase Auth
   const { data: authData, error: authError } = await supabase.auth.signUp({
     email,
@@ -40,9 +42,9 @@ export const signUp = async (data: SignUpData): Promise<{ user: AuthUser | null;
 
   // Si no hay usuario, devolver error
   if (!authData.user) {
-    return { 
-      user: null, 
-      error: new Error('No se pudo crear el usuario. Por favor, inténtalo de nuevo.') 
+    return {
+      user: null,
+      error: new Error('No se pudo crear el usuario. Por favor, inténtalo de nuevo.')
     };
   }
 
@@ -64,13 +66,13 @@ export const signUp = async (data: SignUpData): Promise<{ user: AuthUser | null;
   }
 
   // Devolver el usuario autenticado
-  return { 
+  return {
     user: {
       id: authData.user.id,
       email: authData.user.email || '',
       name: name
-    }, 
-    error: null 
+    },
+    error: null
   };
 };
 
@@ -79,7 +81,7 @@ export const signUp = async (data: SignUpData): Promise<{ user: AuthUser | null;
  */
 export const signIn = async (credentials: UserCredentials): Promise<{ user: AuthUser | null; error: Error | null }> => {
   const { email, password } = credentials;
-  
+
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password
@@ -145,7 +147,7 @@ export const updatePassword = async (password: string): Promise<{ error: Error |
  */
 export const getCurrentUser = async (): Promise<{ user: AuthUser | null; error: Error | null }> => {
   const { data, error } = await supabase.auth.getUser();
-  
+
   if (error || !data?.user) {
     return { user: null, error: error || new Error('No hay usuario autenticado') };
   }
@@ -174,7 +176,7 @@ export const getCurrentUser = async (): Promise<{ user: AuthUser | null; error: 
  */
 export const updateProfile = async (profile: Partial<AuthUser>): Promise<{ error: Error | null }> => {
   const { data: user } = await supabase.auth.getUser();
-  
+
   if (!user || !user.user) {
     return { error: new Error('No hay usuario autenticado') };
   }
@@ -232,4 +234,17 @@ export const onAuthStateChange = (callback: (user: AuthUser | null) => void) => 
   return () => {
     data.subscription.unsubscribe();
   };
+};
+
+export const deleteAccount = async () => {
+  try {
+    const { error } = await supabase.auth.admin.deleteUser(
+      (await supabase.auth.getUser()).data.user?.id || ''
+    );
+    if (error) throw error;
+    return { error: null };
+  } catch (error) {
+    console.error('Error deleting account:', error);
+    return { error };
+  }
 }; 

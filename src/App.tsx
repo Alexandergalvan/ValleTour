@@ -22,6 +22,9 @@ import PageTransition from './components/PageTransition';
 import { usePresentationMode } from './context/PresentationContext';
 import Profile from './pages/Profile';
 import MyTrips from './pages/MyTrips';
+import TripDetails from './pages/TripDetails';
+import NewTrip from './pages/NewTrip';
+import EditTrip from './pages/EditTrip';
 
 // Componente interno para manejar las animaciones de ruta
 const AnimatedRoutes = () => {
@@ -92,11 +95,10 @@ const AnimatedRoutes = () => {
               <Profile />
             </PageTransition>
           } />
-          <Route path="/mis-viajes" element={
-            <PageTransition presentationMode={presentationMode}>
-              <MyTrips />
-            </PageTransition>
-          } />
+          <Route path="/mis-viajes" element={<MyTrips />} />
+          <Route path="/viajes/:id" element={<TripDetails />} />
+          <Route path="/nuevo-viaje" element={<NewTrip />} />
+          <Route path="/viajes/:id/editar" element={<EditTrip />} />
           <Route path="/planificador" element={
             <PageTransition presentationMode={presentationMode}>
               <TripPlannerPage />
