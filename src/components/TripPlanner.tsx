@@ -1073,7 +1073,7 @@ const TripPlanner = () => {
               >
                 {qrLoading ? (
                   <motion.div
-                    className="flex flex-col items-center py-8"
+                    className="flex flex-col items-center justify-center  py-8"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                   >
@@ -1143,6 +1143,7 @@ const TripPlanner = () => {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.3 }}
+                    className="flex flex-col justify-center items-center py-8"
                   >
                     <motion.div
                       className="mb-4 size-64 overflow-hidden rounded-lg border-2 border-gray-200 bg-white p-2 shadow-md"
