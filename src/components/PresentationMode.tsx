@@ -21,7 +21,6 @@ const defaultRoutes = [
   '/servicios',    // Services
   '/blog',         // Blog
   '/nosotros',     // About
-  '/contacto',     // Contact
 ];
 
 // Formatear la tecla para mostrarla
@@ -41,11 +40,11 @@ const formatKeyDisplay = (key: string) => {
 };
 
 // Tiempo de espera para la animación de transición (en ms)
-const TRANSITION_DELAY = 800;
+const TRANSITION_DELAY = 1000;
 
 const PresentationMode: React.FC<PresentationModeProps> = ({
   enabled,
-  interval = 8, // 8 segundos por defecto
+  interval = 14, // 8 segundos por defecto
   routes = defaultRoutes,
 }) => {
   const navigate = useNavigate();
@@ -131,10 +130,7 @@ const PresentationMode: React.FC<PresentationModeProps> = ({
 
   // Función para inicializar la presentación
   const initializePresentation = () => {
-    const documentHeight = Math.max(
-      document.documentElement.scrollHeight,
-      document.body.scrollHeight
-    );
+    const documentHeight = document.body.scrollHeight;
 
     const viewportHeight = window.innerHeight;
     const scrollDistance = documentHeight - viewportHeight;

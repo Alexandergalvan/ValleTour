@@ -33,7 +33,6 @@ const PresentationControls: React.FC<PresentationControlsProps> = ({ className =
     '/servicios',    // Services
     '/blog',         // Blog
     '/nosotros',     // About
-    '/contacto',     // Contact
   ];
 
   // Efecto para grabar una nueva hotkey
