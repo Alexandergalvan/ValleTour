@@ -20,7 +20,7 @@ interface PresentationProviderProps {
 
 export const PresentationProvider: React.FC<PresentationProviderProps> = ({ children }) => {
   const [presentationMode, setPresentationMode] = useState(false);
-  const [presentationInterval, setPresentationInterval] = useState(8);
+  const [presentationInterval, setPresentationInterval] = useState(25);
   const [customRoutes, setCustomRoutes] = useState<string[] | null>(null);
   const [hotkey, setHotkey] = useState('p');
 
@@ -32,10 +32,10 @@ export const PresentationProvider: React.FC<PresentationProviderProps> = ({ chil
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key.toLowerCase() === hotkey.toLowerCase()) {
         const activeElement = document.activeElement as HTMLElement;
-        const isTextField = activeElement.tagName === 'INPUT' || 
-                            activeElement.tagName === 'TEXTAREA' || 
-                            activeElement.isContentEditable;
-        
+        const isTextField = activeElement.tagName === 'INPUT' ||
+          activeElement.tagName === 'TEXTAREA' ||
+          activeElement.isContentEditable;
+
         if (!isTextField) {
           togglePresentationMode();
           event.preventDefault();

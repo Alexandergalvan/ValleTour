@@ -40,11 +40,11 @@ const formatKeyDisplay = (key: string) => {
 };
 
 // Tiempo de espera para la animación de transición (en ms)
-const TRANSITION_DELAY = 1000;
+const TRANSITION_DELAY = 1500;
 
 const PresentationMode: React.FC<PresentationModeProps> = ({
   enabled,
-  interval = 14, // 8 segundos por defecto
+  interval = 60, // 8 segundos por defecto
   routes = defaultRoutes,
 }) => {
   const navigate = useNavigate();
@@ -180,7 +180,7 @@ const PresentationMode: React.FC<PresentationModeProps> = ({
       const elapsed = Date.now() - startTime;
       const currentProgress = (elapsed / duration) * 100;
       setProgress(Math.min(currentProgress, 100));
-    }, 50); // Actualizar cada 50ms para animación fluida
+    }, 20); // Actualizar cada 50ms para animación fluida
   };
 
   // Navegar a la siguiente página
