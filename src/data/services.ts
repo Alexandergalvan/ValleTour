@@ -2,7 +2,7 @@ export interface Service {
   id: string;
   title: string;
   description: string;
-  category: 'hotels' | 'transport' | 'packages' | 'guides' | 'security' | 'culture';
+  category: 'packages' | 'hotels' | 'transport' | 'guides' | 'security' | 'culture';
   price?: {
     min: number;
     max: number;
@@ -11,9 +11,262 @@ export interface Service {
   features: string[];
   image?: string;
   location?: string;
+  duration?: string;
+  difficulty?: 'Fácil' | 'Moderado' | 'Intenso';
+  groupSize?: string;
 }
 
 export const services: Service[] = [
+  {
+    id: 'package-romantic',
+    title: 'Escape Romántico en Oaxaca',
+    description: 'Un viaje íntimo y romántico diseñado especialmente para parejas, combinando lujo, gastronomía y momentos inolvidables.',
+    category: 'packages',
+    location: 'Oaxaca y Valles Centrales',
+    duration: '4 días / 3 noches',
+    difficulty: 'Fácil',
+    groupSize: '2 personas',
+    image: '/packages/romantic.webp',
+    price: {
+      min: 35000,
+      max: 45000,
+      currency: 'MXN'
+    },
+    features: [
+      'Suite romántica con jacuzzi privado',
+      'Desayuno en la cama',
+      'Cena romántica privada en el hotel',
+      'Tour privado de mezcal artesanal',
+      'Masaje de pareja en spa',
+      'Paseo en globo aerostático al amanecer',
+      'Picnic romántico en el campo',
+      'Guía privado bilingüe',
+      'Transporte privado con chofer',
+      'Seguro de viaje premium',
+      'Champagne de bienvenida',
+      'Decoración romántica en la habitación'
+    ]
+  },
+  {
+    id: 'vegas-family',
+    title: 'Aventura Familiar en Las Vegas',
+    description: 'Un paquete especial diseñado para familias que quieren disfrutar de Las Vegas más allá de los casinos, con actividades para todas las edades.',
+    category: 'packages',
+    location: 'Las Vegas, Nevada',
+    duration: '5 días / 4 noches',
+    difficulty: 'Fácil',
+    groupSize: '4-6 personas',
+    image: '/packages/vegas-family.webp',
+    price: {
+      min: 45000,
+      max: 65000,
+      currency: 'MXN'
+    },
+    features: [
+      'Alojamiento en hotel familiar con piscina',
+      'Entradas a espectáculos familiares',
+      'Tour por el Grand Canyon',
+      'Visita a parques temáticos',
+      'Desayunos incluidos',
+      'Transporte privado',
+      'Guía especializado en tours familiares',
+      'Seguro de viaje familiar'
+    ]
+  },
+  {
+    id: 'paris-solo',
+    title: 'Escape Individual en París',
+    description: 'Una experiencia personalizada para descubrir la Ciudad de la Luz a tu propio ritmo, perfecta para viajeros independientes.',
+    category: 'packages',
+    location: 'París, Francia',
+    duration: '6 días / 5 noches',
+    difficulty: 'Fácil',
+    groupSize: '1 persona',
+    image: '/packages/paris-solo.webp',
+    price: {
+      min: 55000,
+      max: 75000,
+      currency: 'MXN'
+    },
+    features: [
+      'Alojamiento en hotel boutique en el centro',
+      'Tour privado por los museos principales',
+      'Paseo en barco por el Sena',
+      'Clase de cocina francesa',
+      'Tarjeta de transporte ilimitado',
+      'Desayunos incluidos',
+      'Asistente personal de viaje',
+      'Seguro de viaje individual'
+    ]
+  },
+  {
+    id: 'package-cultural',
+    title: 'Ruta Cultural Oaxaqueña',
+    description: 'Un viaje inmersivo por la riqueza cultural de Oaxaca, explorando sus tradiciones, gastronomía y arte popular.',
+    category: 'packages',
+    location: 'Oaxaca y Valles Centrales',
+    duration: '5 días / 4 noches',
+    difficulty: 'Fácil',
+    groupSize: '2-8 personas',
+    image: '/packages/cultural.webp',
+    price: {
+      min: 25000,
+      max: 35000,
+      currency: 'MXN'
+    },
+    features: [
+      'Alojamiento en hotel boutique colonial',
+      'Visita a Monte Albán y Mitla',
+      'Taller de alebrijes en San Martín Tilcajete',
+      'Clase de cocina oaxaqueña tradicional',
+      'Tour de mezcal artesanal en Matatlán',
+      'Visita a Teotitlán del Valle para textiles',
+      'Degustación de chocolate artesanal',
+      'Guía especializado bilingüe',
+      'Transporte privado con chofer',
+      'Seguro de viaje premium'
+    ]
+  },
+  {
+    id: 'package-adventure',
+    title: 'Aventura en la Sierra Norte',
+    description: 'Explora la impresionante Sierra Norte de Oaxaca con este paquete de aventura y ecoturismo.',
+    category: 'packages',
+    location: 'Sierra Norte de Oaxaca',
+    duration: '4 días / 3 noches',
+    difficulty: 'Moderado',
+    groupSize: '4-12 personas',
+    image: '/packages/adventure.webp',
+    price: {
+      min: 18000,
+      max: 28000,
+      currency: 'MXN'
+    },
+    features: [
+      'Alojamiento en cabañas ecológicas',
+      'Senderismo en bosques de pino-encino',
+      'Ciclismo de montaña',
+      'Avistamiento de aves',
+      'Visita a cascadas naturales',
+      'Temazcal tradicional',
+      'Comidas típicas de la región',
+      'Guía local especializado',
+      'Equipo de seguridad completo',
+      'Transporte desde Oaxaca'
+    ]
+  },
+  {
+    id: 'package-coast',
+    title: 'Paraíso Costeño',
+    description: 'Descubre las hermosas playas y la cultura costera de Oaxaca en este paquete relajante.',
+    category: 'packages',
+    location: 'Costa de Oaxaca',
+    duration: '6 días / 5 noches',
+    difficulty: 'Fácil',
+    groupSize: '2-6 personas',
+    image: '/packages/coast.webp',
+    price: {
+      min: 32000,
+      max: 45000,
+      currency: 'MXN'
+    },
+    features: [
+      'Alojamiento en hotel frente al mar',
+      'Visita a playas vírgenes',
+      'Snorkel en arrecifes',
+      'Avistamiento de tortugas marinas',
+      'Tour de pesca tradicional',
+      'Clase de cocina costeña',
+      'Masaje relajante',
+      'Transporte privado',
+      'Guía local bilingüe',
+      'Seguro de viaje'
+    ]
+  },
+  {
+    id: 'package-gastronomic',
+    title: 'Ruta Gastronómica Premium',
+    description: 'Un viaje culinario por los sabores más auténticos de Oaxaca, desde mercados tradicionales hasta restaurantes de autor.',
+    category: 'packages',
+    location: 'Oaxaca y alrededores',
+    duration: '4 días / 3 noches',
+    difficulty: 'Fácil',
+    groupSize: '2-6 personas',
+    image: '/packages/gastronomic.webp',
+    price: {
+      min: 28000,
+      max: 38000,
+      currency: 'MXN'
+    },
+    features: [
+      'Alojamiento en hotel boutique',
+      'Tour de mercados tradicionales',
+      'Clase de cocina con chef local',
+      'Cena en restaurantes de autor',
+      'Tour de mezcal premium',
+      'Degustación de chocolate artesanal',
+      'Visita a productores locales',
+      'Guía gastronómico especializado',
+      'Transporte privado',
+      'Recetario exclusivo'
+    ]
+  },
+  {
+    id: 'package-magical',
+    title: 'Pueblos Mágicos y Artesanías',
+    description: 'Explora los pueblos mágicos de Oaxaca y descubre sus tradiciones artesanales centenarias.',
+    category: 'packages',
+    location: 'Valles Centrales de Oaxaca',
+    duration: '5 días / 4 noches',
+    difficulty: 'Fácil',
+    groupSize: '2-8 personas',
+    image: '/packages/magical.webp',
+    price: {
+      min: 22000,
+      max: 32000,
+      currency: 'MXN'
+    },
+    features: [
+      'Alojamiento en hotel colonial',
+      'Visita a talleres artesanales',
+      'Clase de barro negro en San Bartolo',
+      'Taller de textiles en Teotitlán',
+      'Tour de alebrijes en Tilcajete',
+      'Visita a mercados artesanales',
+      'Guía especializado en artesanías',
+      'Transporte privado',
+      'Comidas tradicionales incluidas',
+      'Seguro de viaje'
+    ]
+  },
+  {
+    id: 'package-wellness',
+    title: 'Retiro de Bienestar',
+    description: 'Un paquete diseñado para la relajación y el bienestar, combinando tradiciones ancestrales con prácticas modernas.',
+    category: 'packages',
+    location: 'Oaxaca y Valles Centrales',
+    duration: '4 días / 3 noches',
+    difficulty: 'Fácil',
+    groupSize: '2-6 personas',
+    image: '/packages/wellness.webp',
+    price: {
+      min: 30000,
+      max: 40000,
+      currency: 'MXN'
+    },
+    features: [
+      'Alojamiento en hotel spa',
+      'Sesiones de yoga diarias',
+      'Temazcal tradicional',
+      'Masajes terapéuticos',
+      'Meditación guiada',
+      'Clase de cocina saludable',
+      'Tour de hierbas medicinales',
+      'Instructor de bienestar personal',
+      'Transporte privado',
+      'Comidas orgánicas incluidas'
+    ]
+  },
   {
     id: 'hotels-luxury',
     title: 'Hoteles Coloniales de Lujo',
@@ -98,52 +351,7 @@ export const services: Service[] = [
       'Guía local incluido'
     ]
   },
-  {
-    id: 'packages-luxury',
-    title: 'Experiencia Oaxaqueña Premium',
-    description: 'Paquete turístico completo que incluye los mejores sitios y experiencias de Oaxaca.',
-    category: 'packages',
-    location: 'Oaxaca y alrededores',
-    price: {
-      min: 18000,
-      max: 35000,
-      currency: 'MXN'
-    },
-    features: [
-      'Alojamiento en hotel colonial de lujo',
-      'Transporte privado a todos los sitios',
-      'Guía turístico personalizado bilingüe',
-      'Visita a Monte Albán y Mitla',
-      'Tour de mezcal en Matatlán',
-      'Clase de cocina oaxaqueña',
-      'Seguro de viaje premium',
-      'Comidas gourmet incluidas',
-      'Acceso a eventos culturales exclusivos'
-    ]
-  },
-  {
-    id: 'packages-budget',
-    title: 'Descubre Oaxaca',
-    description: 'Paquete turístico económico que cubre los principales atractivos de Oaxaca.',
-    category: 'packages',
-    location: 'Oaxaca y alrededores',
-    price: {
-      min: 6000,
-      max: 12000,
-      currency: 'MXN'
-    },
-    features: [
-      'Alojamiento en hostal colonial',
-      'Transporte compartido a sitios principales',
-      'Guía turístico grupal',
-      'Visita a Monte Albán',
-      'Tour de mezcal básico',
-      'Clase de cocina básica',
-      'Seguro de viaje básico',
-      'Comidas incluidas',
-      'Acceso a eventos culturales'
-    ]
-  },
+
   {
     id: 'guides-private',
     title: 'Guías Culturales Privados',

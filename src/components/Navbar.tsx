@@ -1,27 +1,19 @@
 import { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import PresentationControls from './PresentationControls';
-import { usePresentationMode } from '../context/PresentationContext';
 import { useAuth } from '../context/AuthContext';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [showPresentationControls, setShowPresentationControls] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const { presentationMode } = usePresentationMode();
   const { user, isAuthenticated, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Función para verificar si la ruta actual coincide con el enlace
   const isActive = (path: string) => {
-    // Coincidencia exacta para inicio
     if (path === '/' && location.pathname === '/') {
       return true;
     }
-    // Para otras rutas, verificamos si comienzan con ese path
-    // excepto el inicio ("/") que ya comprobamos
     if (path !== '/' && location.pathname.startsWith(path)) {
       return true;
     }
@@ -37,7 +29,7 @@ export default function Navbar() {
   // Estilos para enlaces activos e inactivos
   const activeNavLinkClass = "inline-flex items-center px-1 pt-1 text-sm font-medium text-secondary border-b-2 border-secondary dark:text-secondary-light dark:border-secondary-light";
   const inactiveNavLinkClass = "inline-flex items-center px-1 pt-1 text-sm font-medium text-primary-light hover:text-secondary dark:text-gray-300 dark:hover:text-secondary-light";
-  
+
   // Estilos para enlaces activos e inactivos en modo móvil
   const activeMobileNavLinkClass = "block border-l-4 border-secondary py-2 pl-3 pr-4 text-base font-medium text-secondary bg-gray-50 dark:text-secondary-light dark:bg-primary-light dark:border-secondary-light";
   const inactiveMobileNavLinkClass = "block border-l-4 border-transparent py-2 pl-3 pr-4 text-base font-medium text-primary-light hover:border-secondary hover:bg-gray-50 hover:text-secondary dark:text-gray-300 dark:hover:border-secondary-light dark:hover:bg-primary-light dark:hover:text-secondary-light";
@@ -90,56 +82,28 @@ export default function Navbar() {
             </Link>
           </div>
           <div className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-4">
-            {/* <div className="relative">
-              <button
-                onClick={() => setShowPresentationControls(!showPresentationControls)}
-                className={`rounded-md px-3 py-1.5 text-sm font-medium flex items-center gap-1 ${
-                  presentationMode
-                    ? 'bg-red-600 text-white'
-                    : 'bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200'
-                }`}
-              >
-                <svg 
-                  xmlns="http://www.w3.org/2000/svg" 
-                  className="h-4 w-4" 
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path d="M2 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1H3a1 1 0 01-1-1V4z" />
-                  <path d="M8 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1H9a1 1 0 01-1-1V4z" />
-                  <path d="M15 4a1 1 0 00-1 1v12a1 1 0 001 1h2a1 1 0 001-1V5a1 1 0 00-1-1h-2z" />
-                </svg>
-                Presentación
-              </button>
-              
-              {showPresentationControls && (
-                <div className="absolute right-0 mt-2 w-64 z-50">
-                  <PresentationControls className="shadow-lg rounded-md overflow-hidden" />
-                </div>
-              )}
-            </div> */}
-            
+
             {isAuthenticated ? (
               // Menú de usuario
               <div className="relative">
                 <button
                   onClick={() => setShowUserMenu(!showUserMenu)}
-                  className="flex items-center text-sm font-medium text-primary-light rounded-full focus:outline-none focus:ring-2 focus:ring-secondary dark:text-gray-300"
+                  className="flex items-center rounded-full text-sm font-medium text-primary-light focus:outline-none focus:ring-2 focus:ring-secondary dark:text-gray-300"
                 >
                   <span className="sr-only">Abrir menú de usuario</span>
                   <div className="flex items-center gap-2">
-                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-secondary text-white">
+                    <div className="flex size-8 items-center justify-center rounded-full bg-secondary text-white">
                       {user?.name ? user.name.charAt(0).toUpperCase() : user?.email.charAt(0).toUpperCase()}
                     </div>
                     <span>{user?.name || user?.email}</span>
-                    <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                    <svg className="size-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                     </svg>
                   </div>
                 </button>
-                
+
                 {showUserMenu && (
-                  <div className="absolute right-0 mt-2 w-48 rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 dark:bg-primary-light z-50">
+                  <div className="absolute right-0 z-50 mt-2 w-48 rounded-md bg-white py-1 opacity-5 shadow-lg ring-1 ring-black dark:bg-primary-light">
                     <Link
                       to="/perfil"
                       className="block px-4 py-2 text-sm text-primary-light hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-primary"
@@ -163,7 +127,7 @@ export default function Navbar() {
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-primary"
+                      className="block w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-gray-100 dark:hover:bg-primary"
                     >
                       Cerrar Sesión
                     </button>
@@ -283,15 +247,12 @@ export default function Navbar() {
         </div>
         <div className="border-t border-gray-200 pb-3 pt-4 dark:border-primary-light">
           <div className="space-y-2 px-4">
-            <div className="mb-3">
-              <PresentationControls />
-            </div>
-            
+
             {isAuthenticated ? (
               // Menú de usuario móvil
               <div className="space-y-2">
                 <div className="flex items-center px-4 py-2">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-secondary text-white">
+                  <div className="flex size-8 items-center justify-center rounded-full bg-secondary text-white">
                     {user?.name ? user.name.charAt(0).toUpperCase() : user?.email.charAt(0).toUpperCase()}
                   </div>
                   <div className="ml-3">
@@ -322,7 +283,7 @@ export default function Navbar() {
                 </Link>
                 <button
                   onClick={handleLogout}
-                  className="block w-full text-left rounded-md px-3 py-2 text-base font-medium text-red-600 hover:bg-gray-100 dark:hover:bg-primary-light"
+                  className="block w-full rounded-md px-3 py-2 text-left text-base font-medium text-red-600 hover:bg-gray-100 dark:hover:bg-primary-light"
                 >
                   Cerrar Sesión
                 </button>

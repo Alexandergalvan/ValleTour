@@ -12,7 +12,7 @@ const footerNavigation = {
     { name: 'Mitla', href: '/destinos/mitla' },
     { name: 'Monte Albán', href: '/destinos/monte-alban' },
     { name: 'Centro Historico de Oaxaca', href: '/destinos/centro-historico' },
-    { name: 'Bahías de Huatulco', href: '/destinos/bahias' },
+    { name: 'Bahías de Huatulco', href: '/destinos/bahias-huatulco' },
   ],
   servicios: [
     { name: 'Tours Guiados', href: '/servicios#tours' },
